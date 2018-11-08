@@ -11,9 +11,13 @@ Prodotto::Prodotto(int _quantita, char* _colore, char* _marca, double _costo){
     costo=_costo;
     barcode++;
     cout<<"Creato prodotto"<<marca<<endl;
-    cout<<"barcode"<<barcode<<endl;
+    cout<<"barcode"<<barcode<<endl; //solo di debug
 }
 
 Prodotto::~Prodotto(){
     cout<<"Distrutto prodotto"<<marca<<endl;
+}
+
+void Prodotto::stampa()const{
+    cout<<quantita<<" "<<colore<<" "<<marca<<" "<<costo<<" "<<barcode<<endl;
 }

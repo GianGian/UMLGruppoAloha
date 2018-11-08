@@ -12,6 +12,7 @@ private:
     static int barcode;
 public:
     Prodotto(int quantita, char* _colore, char* _marca, double _costo);
+    void stampa()const;
     ~Prodotto();
 };
 

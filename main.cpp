@@ -8,7 +8,8 @@ int main(int argc, char *argv[]){
     {
     Magazzino m("Rosmini","Leonardelli",500);
     m.stampa();
-    Prodotto prod(10,"rosa","Apple",1200);
+    Prodotto pc(10,"rosa","Apple",1200);
+    pc.stampa();
     m.inserisci_prodotto(20,"bianco","HP",600);
     }
     system("PAUSE");

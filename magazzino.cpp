@@ -25,5 +25,5 @@ void Magazzino::stampa()const{
 void Magazzino::inserisci_prodotto(int _quantita, char* _colore, char* _marca, double _costo){
     if(p==NULL){//se avessi più prodotti dovrei fare una lista?
     p= new Prodotto(_quantita,_colore,_marca, _costo);
-}
+    }
 }
