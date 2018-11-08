@@ -1,7 +1,7 @@
 [Project]
 FileName=UML Aloha.dev
 Name=UML Aloha
-UnitCount=3
+UnitCount=5
 Type=1
 Ver=1
 ObjFiles=
@@ -69,6 +69,26 @@ BuildCmd=
 
 [Unit2]
 FileName=magazzino.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit4]
+FileName=prodotto.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=prodotto.h
 CompileCpp=1
 Folder=
 Compile=1
