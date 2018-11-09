@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = main.o magazzino.o prodotto.o $(RES)
-LINKOBJ  = main.o magazzino.o prodotto.o $(RES)
+OBJ  = main.o magazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o $(RES)
+LINKOBJ  = main.o magazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o $(RES)
 LIBS =  -L"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/lib"  
 INCS =  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include" 
 CXXINCS =  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include/c++/3.4.2/backward"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include/c++/3.4.2/mingw32"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include/c++/3.4.2"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include" 
@@ -34,3 +34,21 @@ magazzino.o: magazzino.cpp
 
 prodotto.o: prodotto.cpp
 	$(CPP) -c prodotto.cpp -o prodotto.o $(CXXFLAGS)
+
+privato.o: privato.cpp
+	$(CPP) -c privato.cpp -o privato.o $(CXXFLAGS)
+
+impresa.o: impresa.cpp
+	$(CPP) -c impresa.cpp -o impresa.o $(CXXFLAGS)
+
+consumatore.o: consumatore.cpp
+	$(CPP) -c consumatore.cpp -o consumatore.o $(CXXFLAGS)
+
+anagrafica.o: anagrafica.cpp
+	$(CPP) -c anagrafica.cpp -o anagrafica.o $(CXXFLAGS)
+
+dipendente.o: dipendente.cpp
+	$(CPP) -c dipendente.cpp -o dipendente.o $(CXXFLAGS)
+
+fornitore.o: fornitore.cpp
+	$(CPP) -c fornitore.cpp -o fornitore.o $(CXXFLAGS)
