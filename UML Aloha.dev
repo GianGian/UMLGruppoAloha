@@ -1,9 +1,9 @@
 [Project]
 FileName=UML Aloha.dev
 Name=UML Aloha
-UnitCount=23
+UnitCount=27
 Type=1
-Ver=1
+Ver=2
 ObjFiles=
 Includes=
 Libs=
@@ -28,6 +28,8 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=
+LogOutput=
+LogOutputEnabled=0
 
 [Unit1]
 FileName=main.cpp
@@ -56,6 +58,7 @@ OriginalFilename=
 ProductName=
 ProductVersion=
 AutoIncBuildNr=0
+SyncProduct=0
 
 [Unit3]
 FileName=gestioneMagazzino.cpp
@@ -269,6 +272,46 @@ BuildCmd=
 
 [Unit23]
 FileName=ordineVendita.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit24]
+FileName=metodoDiPagamento.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit25]
+FileName=metodoDiPagamento.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit26]
+FileName=servizio.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit27]
+FileName=servizio.cpp
 CompileCpp=1
 Folder=
 Compile=1

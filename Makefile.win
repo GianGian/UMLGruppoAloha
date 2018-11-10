@@ -1,30 +1,28 @@
 # Project: UML Aloha
-# Makefile created by Dev-C++ 4.9.9.2
+# Makefile created by Dev-C++ 5.11
 
-CPP  = g++.exe
-CC   = gcc.exe
-WINDRES = windres.exe
-RES  = 
-OBJ  = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o $(RES)
-LINKOBJ  = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o $(RES)
-LIBS =  -L"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/lib"  
-INCS =  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include" 
-CXXINCS =  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include/c++/3.4.2/backward"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include/c++/3.4.2/mingw32"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include/c++/3.4.2"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include" 
-BIN  = "UML Aloha.exe"
-CXXFLAGS = $(CXXINCS)  
-CFLAGS = $(INCS)  
-RM = rm -f
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o metodoDiPagamento.o servizio.o
+LINKOBJ  = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o metodoDiPagamento.o servizio.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = "UML Aloha.exe"
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
 
-all: all-before "UML Aloha.exe" all-after
-
+all: all-before $(BIN) all-after
 
 clean: clean-custom
 	${RM} $(OBJ) $(BIN)
 
 $(BIN): $(OBJ)
-	$(CPP) $(LINKOBJ) -o "UML Aloha.exe" $(LIBS)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
 main.o: main.cpp
 	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
@@ -61,3 +59,9 @@ ordineAcquisto.o: ordineAcquisto.cpp
 
 ordineVendita.o: ordineVendita.cpp
 	$(CPP) -c ordineVendita.cpp -o ordineVendita.o $(CXXFLAGS)
+
+metodoDiPagamento.o: metodoDiPagamento.cpp
+	$(CPP) -c metodoDiPagamento.cpp -o metodoDiPagamento.o $(CXXFLAGS)
+
+servizio.o: servizio.cpp
+	$(CPP) -c servizio.cpp -o servizio.o $(CXXFLAGS)

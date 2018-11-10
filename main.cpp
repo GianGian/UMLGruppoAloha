@@ -8,6 +8,8 @@
 #include "fornitore.h"
 #include "ordineVendita.h"
 #include "ordineAcquisto.h"
+#include "metodoDiPagamento.h"
+#include "servizio.h"
 using namespace std;
 
 int main(int argc, char *argv[]){
@@ -24,12 +26,18 @@ int main(int argc, char *argv[]){
     Dipendente d ("Sara","345678","cuoca",1234);
     //Fornitore f("morino","987654321","SMA",1000);
     Ordine o(400);
-    OrdineVendita v(600,"sale'");
+    MetodoDiPagamento bancomat("bancomat",5000, 3);
+    OrdineVendita v(600,"sale'", &bancomat);
     OrdineAcquisto q(500,"boh",5);
     m.aggiungi_dipendente("Sara","345678","cuoca",1234);
     m.incrementa_cassa(-500,1234);
     m.incrementa_cassa(600,12345);//matricola non inserita
     m.inserisci_prodotto(20,"bianco","HP",600,1234);
+    //test per provare l'inserimento di un servizio ad un prodotto
+    Servizio s("assicurazione",15,200,10);
+    Prodotto p(15, "giallo","HP",500, &s);
+    Prodotto p1(20, "rosa","HP",600);
+    //fine test====================================================
     }
     system("PAUSE");
     return EXIT_SUCCESS;

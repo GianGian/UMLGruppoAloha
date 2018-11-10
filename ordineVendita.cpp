@@ -3,10 +3,11 @@
 #include "ordineVendita.h"
 using namespace std;
 
-OrdineVendita::OrdineVendita (int _quantita,char* _via): Ordine(_quantita){
+OrdineVendita::OrdineVendita (int _quantita,char* _via, MetodoDiPagamento* _pagamento): Ordine(_quantita){
     via=_via;
-    cout<<"Creato ordine di vendita in via "<<via<<endl;
+    pagamento= _pagamento;
+    cout<<"Creato ordine di vendita in via "<< via << " e con metodo di pagamento "<< pagamento->get_nome() <<endl;
 }
 OrdineVendita::~OrdineVendita(){
-    cout<<"Distrutto ordine di vendita in via "<<via<<endl;
+    cout<<"Distrutto ordine di vendita in via "<<via << " e con metodo di pagamento "<< pagamento->get_nome() <<endl;
 }
