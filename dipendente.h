@@ -12,5 +12,6 @@ private:
 public:
     Dipendente(char* _nome,char* _n_Telefono,char* _ruolo,int _matricola);
     ~Dipendente();
+    int get_matricola()const;
 };
 #endif

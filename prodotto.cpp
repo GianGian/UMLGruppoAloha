@@ -4,6 +4,7 @@
 using namespace std;
 
 int Prodotto::barcode=0;
+
 Prodotto::Prodotto(int _quantita, char* _colore, char* _marca, double _costo){
     quantita=_quantita;
     colore=_colore;

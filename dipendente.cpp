@@ -11,3 +11,7 @@ Dipendente::Dipendente(char* _nome,char* _n_Telefono,char* _ruolo,int _matricola
 Dipendente::~Dipendente(){
     cout<<"Distrutto dipendente con matricola "<<matricola<<endl;
 }
+
+int Dipendente::get_matricola()const{
+    return matricola;
+}

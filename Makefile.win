@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = main.o magazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o $(RES)
-LINKOBJ  = main.o magazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o $(RES)
+OBJ  = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o $(RES)
+LINKOBJ  = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o $(RES)
 LIBS =  -L"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/lib"  
 INCS =  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include" 
 CXXINCS =  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include/c++/3.4.2/backward"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include/c++/3.4.2/mingw32"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include/c++/3.4.2"  -I"D:/Personali Gianlorenzo/Documenti/Portable/dev_portable/Dev-CppPortable/App/devcpp/include" 
@@ -29,8 +29,8 @@ $(BIN): $(OBJ)
 main.o: main.cpp
 	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
 
-magazzino.o: magazzino.cpp
-	$(CPP) -c magazzino.cpp -o magazzino.o $(CXXFLAGS)
+gestioneMagazzino.o: gestioneMagazzino.cpp
+	$(CPP) -c gestioneMagazzino.cpp -o gestioneMagazzino.o $(CXXFLAGS)
 
 prodotto.o: prodotto.cpp
 	$(CPP) -c prodotto.cpp -o prodotto.o $(CXXFLAGS)
@@ -52,3 +52,12 @@ dipendente.o: dipendente.cpp
 
 fornitore.o: fornitore.cpp
 	$(CPP) -c fornitore.cpp -o fornitore.o $(CXXFLAGS)
+
+ordine.o: ordine.cpp
+	$(CPP) -c ordine.cpp -o ordine.o $(CXXFLAGS)
+
+ordineAcquisto.o: ordineAcquisto.cpp
+	$(CPP) -c ordineAcquisto.cpp -o ordineAcquisto.o $(CXXFLAGS)
+
+ordineVendita.o: ordineVendita.cpp
+	$(CPP) -c ordineVendita.cpp -o ordineVendita.o $(CXXFLAGS)

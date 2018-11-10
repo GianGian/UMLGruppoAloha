@@ -1,7 +1,7 @@
 [Project]
 FileName=UML Aloha.dev
 Name=UML Aloha
-UnitCount=17
+UnitCount=23
 Type=1
 Ver=1
 ObjFiles=
@@ -58,7 +58,7 @@ ProductVersion=
 AutoIncBuildNr=0
 
 [Unit3]
-FileName=magazzino.cpp
+FileName=gestioneMagazzino.cpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -68,7 +68,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=magazzino.h
+FileName=gestioneMagazzino.h
 CompileCpp=1
 Folder=
 Compile=1
@@ -209,6 +209,66 @@ BuildCmd=
 
 [Unit17]
 FileName=fornitore.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit18]
+FileName=ordine.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit19]
+FileName=ordine.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit20]
+FileName=ordineAcquisto.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit21]
+FileName=ordineAcquisto.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit22]
+FileName=ordineVendita.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit23]
+FileName=ordineVendita.h
 CompileCpp=1
 Folder=
 Compile=1
