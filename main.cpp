@@ -33,11 +33,11 @@ int main(int argc, char *argv[]){
     m.incrementa_cassa(-500,1234);
     m.incrementa_cassa(600,12345);//matricola non inserita
     m.inserisci_prodotto(20,"bianco","HP",600,1234);
-    //test per provare l'inserimento di un servizio ad un prodotto
+    /*//test per provare l'inserimento di un servizio ad un prodotto
     Servizio s("assicurazione",15,200,10);
-    Prodotto p(15, "giallo","HP",500, &s);
+    Prodotto p(15, "giallo","HP",500);
     Prodotto p1(20, "rosa","HP",600);
-    //fine test====================================================
+    //fine test====================================================*/
     }
     system("PAUSE");
     return EXIT_SUCCESS;

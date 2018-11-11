@@ -18,6 +18,4 @@ public:
 	//void stampa();
 };
 
-
-
 #endif
