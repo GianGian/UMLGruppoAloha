@@ -15,3 +15,12 @@ Dipendente::~Dipendente(){
 int Dipendente::get_matricola()const{
     return matricola;
 }
+
+void Dipendente::stampa()const{
+    cout<<ruolo<<endl;
+}
+
+ostream& operator <<(ostream &os, Dipendente &d){
+    os<<d.ruolo; 
+    return os;
+}  
