@@ -9,6 +9,7 @@ private:
     char* n_Telefono;
 
 public:
-
+Anagrafica(char* _nome, char* _n_Telefono);
+void put_telefono(char* _n_Telefono);
 };
 #endif

@@ -6,9 +6,11 @@ using namespace std;
 
 class Consumatore:public Anagrafica{
 private:
-    int sconto;
+   int sconto;
 
 public:
-
-};
+   Consumatore(char* nome, char* telefono, int _sconto);
+	int getSconto();
+	void putSconto(int s);
+};			
 #endif

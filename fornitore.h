@@ -7,8 +7,9 @@ using namespace std;
 class Fornitore:public Anagrafica{
 private:
     char* denominazione;
-    int prodottiVenduti;
+    char* prodottiVenduti;
 
 public:
+	Fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti);
 };
 #endif

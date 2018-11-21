@@ -4,12 +4,12 @@
 #include "consumatore.h"
 using namespace std;
 
-class Privato:Consumatore{
+class Privato: public Consumatore{
 private:
     char* codiceFiscale;
     char* cognome;
 public:
-
+Privato(char* _nome,char* _cognome,char* _telefono, char* _codiceFiscale, int _sconto);
 };
 #endif
 

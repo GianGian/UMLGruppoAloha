@@ -7,5 +7,7 @@ private:
 	int franchigia;
 	int costoServizio;
 public:
+	Servizio(char* _nome, int _durata, int _franchigia, int _costoServizio);
+	int get_costo();
 };
 #endif

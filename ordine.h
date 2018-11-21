@@ -5,9 +5,8 @@ using namespace std;
 
 class Ordine{
 private:
-    int quantita;
-    static int n_ordine;  
+	static int n_ordine;  
 public:
-
+	Ordine();
 };
 #endif
