@@ -10,7 +10,5 @@ private:
     int prodottiVenduti;
 
 public:
-    Fornitore(char* _nome,char* _n_Telefono,char* _denominazione,int _prodottiVenduti);
-    ~Fornitore();
 };
 #endif

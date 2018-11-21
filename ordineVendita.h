@@ -14,7 +14,5 @@ private:
     Servizio *s;
   
 public:
-    OrdineVendita (int _quantita,char* _via, MetodoDiPagamento* _pagamento, Servizio* _s=NULL);
-    ~OrdineVendita();
 };
 #endif

@@ -8,7 +8,6 @@ private:
     int quantita;
     static int n_ordine;  
 public:
-    Ordine (int _quantita);
-    ~Ordine();
+
 };
 #endif

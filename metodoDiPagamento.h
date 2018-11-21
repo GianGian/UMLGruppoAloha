@@ -11,11 +11,7 @@ private:
 	int commissione;
 	
 public:
-	MetodoDiPagamento(char* nome, int _ma ,int _co);
-	~MetodoDiPagamento();
-	int get_commissione()const;
-	char* get_nome()const;
-	//void stampa();
+
 };
 
 #endif

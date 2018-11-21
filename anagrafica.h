@@ -9,7 +9,6 @@ private:
     char* n_Telefono;
 
 public:
-    Anagrafica(char* _nome,char* _n_Telefono);
-    ~Anagrafica();
+
 };
 #endif

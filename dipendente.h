@@ -9,11 +9,6 @@ private:
     char* ruolo;
     int matricola;
 
-public:
-    Dipendente(char* _nome,char* _n_Telefono,char* _ruolo,int _matricola);
-    ~Dipendente();
-    int get_matricola()const;
-    void stampa()const;
-    friend ostream& operator <<(ostream &os,Dipendente &d);   
+public:   
 };
 #endif

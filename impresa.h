@@ -9,7 +9,5 @@ private:
     char* piva;
 
 public:
-    Impresa(char* _nome,char* _n_Telefono,int _sconto,char*_piva);
-    ~Impresa();
 };
 #endif
