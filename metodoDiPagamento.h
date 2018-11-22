@@ -11,7 +11,7 @@ private:
 	int commissione;
 	
 public:
-
+MetodoDiPagamento(char *_nome, int _massimale, int _commissione);
 };
 
 #endif
