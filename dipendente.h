@@ -9,6 +9,10 @@ private:
     char* ruolo;
     int matricola;
 
-public:   
+public:
+	Dipendente(char* _nome, char* _telefono,char* _ruolo, int _matricola); 
+	friend ostream& operator<<(ostream& os,Dipendente& dip);  
 };
+
+ostream& operator<<(ostream& os,Dipendente& dip);
 #endif

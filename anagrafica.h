@@ -4,7 +4,7 @@
 using namespace std;
 
 class Anagrafica{
-private:
+protected:
     char* nome;
     char* n_Telefono;
 
