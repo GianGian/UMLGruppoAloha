@@ -6,9 +6,9 @@ LeftChar=1
 Open=1
 Top=0
 [Editor_2]
-CursorCol=136
-CursorRow=80
-TopLine=39
+CursorCol=38
+CursorRow=81
+TopLine=38
 LeftChar=1
 Open=1
 Top=0
@@ -42,7 +42,7 @@ Open=0
 Top=0
 [Editors]
 Focused=2
-Order=0,1,2,15,16,14,13,11,5
+Order=0,1,2,15,16,14,13,11
 [Editor_0]
 Open=1
 Top=1
@@ -116,8 +116,8 @@ LeftChar=1
 [Editor_16]
 Open=0
 Top=0
-CursorCol=36
-CursorRow=11
+CursorCol=3
+CursorRow=14
 TopLine=1
 LeftChar=1
 [Editor_17]

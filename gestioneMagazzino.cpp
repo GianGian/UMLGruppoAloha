@@ -38,8 +38,7 @@ void Magazzino::aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazio
 
 void Magazzino::togli_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti){
 	list <Fornitore>::iterator deliter;
-	Fornitore f(_nome, _telefono, _denominazione, _prodottiVenduti);
-	deliter=find(forn.begin(), forn.end(), f);
+	deliter=find(forn.begin(), forn.end(), Fornitore (_nome, _telefono, _denominazione, _prodottiVenduti));
 	if (deliter!=forn.end()){
 		forn.erase(deliter);
 		cout<<"Eliminato fornitore: "<<_denominazione<<endl;
@@ -77,7 +76,9 @@ void test(){
 	m.aggiungi_fornitore("Giulia","3323245654","Asus","pc e tablet");
 	m.aggiungi_fornitore("Gianlor","3423245654","Samsung","pc, tablet e smartphone");
 	m.lista_fornitori();
-	m.togli_fornitore("Silvia","3223245654","Lenovo","pc e tablet");//se provo a metterne uno finto (basta togliere una lettera si impalla
+	m.togli_fornitore("Silvia","3223245654","Lenono","pc e tablet");//se provo a metterne uno finto (basta togliere una lettera si impalla
+	m.togli_fornitore("Silvia","3223245654","Lenovo","pc e tablet");
+	m.togli_fornitore("Silvia","322324564","Lenono","pc e tablet");
 	m.lista_fornitori();
 	
 }
