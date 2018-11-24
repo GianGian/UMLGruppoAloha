@@ -10,7 +10,7 @@ private:
     char* prodottiVenduti;
 
 public:
-	Fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti);
+	Fornitore(char* _nome,char* _telefono,char* _denominazione,char* _prodottiVenduti);
 	bool operator == (const Fornitore& f);
 	friend ostream &operator << (ostream & os, Fornitore &f);
 };
