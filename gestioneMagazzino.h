@@ -13,6 +13,7 @@
 //#include <list>
 #include <algorithm>
 #include <map>
+#include <list>
 using namespace std;
 
 class Magazzino{
@@ -21,11 +22,15 @@ private:
     char* denominazione;
     double fondoCassa;
     map <int,Dipendente> dip;
+    list <Fornitore> forn;
    
 public:
 	void aggiungi_dipendente(char* _nome, char* _telefono,char* _ruolo, int _matricola);
 	void togli_dipendente(int _matricola);
 	void lista_dipendenti();
+	void aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti);
+	void togli_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti);
+	void lista_fornitori();
 };
 void test();
 #endif

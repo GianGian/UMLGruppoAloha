@@ -31,6 +31,29 @@ void Magazzino::lista_dipendenti(){
 	}
 }
 
+void Magazzino ::aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti){
+	forn.push_back(Fornitore(_nome, _telefono, _denominazione, _prodottiVenduti));
+	cout << "Aggiunto Fornitore " << _denominazione << endl;
+}
+void Magazzino::togli_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti){
+	list <Fornitore>:: iterator iter;
+	Fornitore f(_nome, _telefono, _denominazione, _prodottiVenduti);
+	iter=find(forn.begin(), forn.end(), f);
+	if (iter!=forn.end()){
+		forn.erase(iter);
+		cout << "Eliminato fornitore: " << _denominazione << endl;
+	}else{
+		cout << "Fornitore " << _denominazione << " non trovato"<< endl;
+	}
+}
+
+void Magazzino::lista_fornitori(){
+	list <Fornitore>:: iterator iter;
+	for(iter=forn.begin(); iter!=forn.end();++iter){
+		cout << *iter << " ";
+	}
+}
+
 void test(){
 	Magazzino m;
 	/*Privato Gigino("Gigino", "Dimaio", "123456789","GGGGGG", 100);
@@ -48,6 +71,13 @@ void test(){
 	m.togli_dipendente(12576);
 	m.togli_dipendente(1256);
 	m.lista_dipendenti();
+	//cout << "stampo fornitori"<< endl;
+	m.aggiungi_fornitore("Silvia","3223245654","Lenovo","pc e tablet");
+	m.aggiungi_fornitore("Giulia","3323245654","Asus","pc e tablet");
+	m.aggiungi_fornitore("Gianlor","3423245654","Samsung","pc, tablet e smartphone");
+	m.lista_fornitori();
+	m.togli_fornitore("Silvia","3223245654","lenovo","pc e tablet");
+	m.lista_fornitori();
 	
 }
 
