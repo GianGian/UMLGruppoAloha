@@ -10,11 +10,14 @@
 #include "ordineAcquisto.h"
 #include "metodoDiPagamento.h"
 #include "servizio.h"
-//#include <list>
+#include "fattura.h"
+#include <list>
 #include <algorithm>
 #include <map>
 #include <list>
 using namespace std;
+
+
 
 class Magazzino{
 private:
@@ -22,6 +25,7 @@ private:
     char* denominazione;
     double fondoCassa;
     map <int,Dipendente> dip;
+    map <int,Fattura> fat;
     list <Fornitore> forn;
    
 public:
@@ -31,6 +35,9 @@ public:
 	void aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti);
 	void togli_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti);
 	void lista_fornitori();
+	void aggiungi_fattura(int _totale, bool _vendita);
+	void togli_fattura(int _numero);
+	void lista_fattura();
 };
 void test();
 #endif
