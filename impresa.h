@@ -10,5 +10,8 @@ private:
 
 public:
 	Impresa(char* _nome, char* _telefono, char* _piva, int _sconto);
+	friend ostream& operator<< (ostream &os, Impresa &i);
 };
+
+ostream& operator<< (ostream &os, Impresa &i);
 #endif

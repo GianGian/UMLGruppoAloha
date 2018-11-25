@@ -10,9 +10,13 @@ private:
     char* colore;
     char* marca;
     double costo;
-    static int barcode;
+    static int last_barcode; //<Usato per avere barcode univoci
+    int barcode;
 public:
-
+Prodotto(int _quantita, char* _colore, char* _marca, double _costo);
+int getBarcode();
+friend ostream & operator<<(ostream &os, Prodotto &p);
 };
 
+ostream & operator<<(ostream &os, Prodotto &p);
 #endif

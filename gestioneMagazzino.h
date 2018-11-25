@@ -26,7 +26,11 @@ private:
     double fondoCassa;
     map <int,Dipendente> dip;
     map <int,Fattura> fat;
+    map <char*, Privato> pri;
+    map <char*, Impresa> imp;
+    map <int, Prodotto> pro;
     list <Fornitore> forn;
+    list <MetodoDiPagamento> met;
    
 public:
 	void aggiungi_dipendente(char* _nome, char* _telefono,char* _ruolo, int _matricola);
@@ -38,6 +42,18 @@ public:
 	void aggiungi_fattura(int _totale, bool _vendita);
 	void togli_fattura(int _numero);
 	void lista_fattura();
+	void aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int _massimale);
+	void lista_metodo_di_pagamento();
+	void aggiungi_privato(char* _nome,char* _cognome,char* _telefono, char* _codiceFiscale, int _sconto);
+	void togli_privato(char* _codiceFiscale);
+	void lista_privato();
+	void aggiungi_impresa(char* _nome,char* _telefono, char* _piva, int _sconto);
+	void togli_impresa(char* _piva);
+	void lista_impresa();
+	void aggiungi_prodotto(int _quantita, char *_colore, char *_marca, double _costo);
+	void lista_prodotto();
+	void togli_prodotto(int _barcode);
+	Prodotto find_prodotto(int _barcode);
 };
 void test();
 #endif

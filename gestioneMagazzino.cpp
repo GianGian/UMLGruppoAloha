@@ -62,7 +62,7 @@ void Magazzino::aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazio
 * \brief Funzione per togliere un fornitore.
 *
 * Per poterlo fare e' necessario conoscere esattamente tutti i parametri con cui questo era 
-* inserito nel sistema.
+* inserito nel sistema. HA SENSO???
 */
 void Magazzino::togli_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti){
 	list <Fornitore>::iterator deliter;
@@ -128,6 +128,148 @@ void Magazzino::lista_fattura(){
 	}
 }
 
+/**
+* \brief Funzione per inserire nella lista dei metodi di pagamento un nuovo metodo
+*/
+void Magazzino:: aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int _massimale){
+	met.push_back(MetodoDiPagamento(_tipo, _massimale, _commissione));
+	cout<<"Creato metodo di pagamento "<< _tipo<<endl;
+}
+
+/**
+* \brief Funzione per visualizzare tutti i metodi di pagamento disponibili
+*/
+void Magazzino::lista_metodo_di_pagamento(){
+	list<MetodoDiPagamento>::iterator iter;
+	for(iter = met.begin(); iter!=met.end();++iter){
+		cout<<(*iter)<<endl;
+	}
+}
+
+/**
+* \brief Funzione per aggiungere un consumatore privato.
+*/
+void Magazzino::aggiungi_privato(char* _nome,char* _cognome,char* _telefono, char* _codiceFiscale, int _sconto){
+	Privato p(_nome, _cognome, _telefono, _codiceFiscale, _sconto);
+	pri.insert(pair<char*, Privato> (_codiceFiscale, p));
+	cout<<"Inserito privato "<<p<<endl;
+}
+
+/**
+* \brief Funzione per aggiungere un rimuovere un privato.
+*
+*La ricerca e' effettuata attraverso il codice fiscale.
+*/
+
+void Magazzino::togli_privato(char* _codiceFiscale){
+	map <char*, Privato>::iterator iter;
+	iter = pri.find(_codiceFiscale);
+	if(iter != pri.end()){
+		cout<<"Rimosso privato "<<_codiceFiscale<<endl;
+		pri.erase(iter);
+	}
+	else{
+		cout<<"Privato non trovato!"<<endl;
+	}
+}
+
+/**
+* \brief Funzione per stampare tutti i consumatori privati presenti nel database.
+*/
+
+void Magazzino::lista_privato(){
+	map <char*, Privato>::iterator iter;
+	for(iter = pri.begin(); iter !=pri.end(); ++iter){
+		cout<<iter->second<<endl;
+	}
+}
+
+/**
+* \brief Funzione per inserire una nuova impresa nel database.
+*/
+void Magazzino::aggiungi_impresa(char* _nome,char* _telefono, char* _piva, int _sconto){
+	Impresa i(_nome, _telefono, _piva, _sconto);
+	imp.insert(pair<char*, Impresa> (_piva, i));
+	cout<<"Inserita impresa "<<i<<endl;
+}
+
+/**
+* \brief Funzione per rimuovere un'impresa nel database.
+*
+*La ricerca e' effettuata attraverso la partita iva che si suppone essere univoca per tutto 
+*il database.
+*/
+void Magazzino::togli_impresa(char* _piva){
+	map <char*, Impresa>::iterator iter;
+	iter = imp.find(_piva);
+	if(iter != imp.end()){
+		cout<<"Rimossa impresa "<<_piva<<endl;
+		imp.erase(iter);
+	}
+	else{
+		cout<<"Impresa non trovata!"<<endl;
+	}
+}
+
+/**
+* \brief Funzione per stampare tutti i consumatori impresa presenti nel database.
+*/
+void Magazzino::lista_impresa(){
+	map <char*, Impresa>::iterator iter;
+	for(iter = imp.begin(); iter !=imp.end(); ++iter){
+		cout<<iter->second<<endl;
+	}
+}
+	
+/**
+* \brief Funzione per aggiungere prodotti in magazzino.
+*/
+void Magazzino::aggiungi_prodotto(int _quantita, char *_colore, char *_marca, double _costo){
+	Prodotto p(_quantita, _colore, _marca, _costo);
+	pro.insert(pair<int, Prodotto>(p.getBarcode(), p));
+	cout<<"Inserito prodotto: "<<p<<endl;
+}
+
+/**
+* \brief Funzione per stampare il prodotto.
+*/
+void Magazzino::lista_prodotto(){
+	map<int, Prodotto>::iterator iter;
+	for(iter = pro.begin(); iter!=pro.end();++iter){
+		cout<<iter->second<<endl;
+	}
+}
+
+/**
+* \brief Funzione per togliere un prodotto dato il barcode.
+*/
+void Magazzino::togli_prodotto(int _barcode){
+	map<int, Prodotto>::iterator iter;
+	iter = pro.find(_barcode);
+	if(iter !=pro.end()){
+		cout<<"Eliminato prodotto "<<_barcode<<endl;
+		pro.erase(iter);
+	}
+	else cout<<"Errore, prodotto non trovato."<<endl;
+}
+
+/**
+* \brief Funzione per trovare un prodotto dato il barcode.
+*
+* Funzione usata al momento di creare l'ordine. (credo)
+* \return Prodotto
+*/
+Prodotto Magazzino::find_prodotto(int _barcode){
+	map<int, Prodotto>::iterator iter;
+	iter = pro.find(_barcode);
+	if(iter != pro.end()) return iter->second;
+	else cout<<"Errore, prodotto non trovato"<<endl;
+	
+	/// \todo Capire cosa fare se non trovo il prodotto desiderato.
+	//COSA DEVE FARE QUI???
+}
+	
+	
 void test(){
 	Magazzino m;
 	/*Privato Gigino("Gigino", "Dimaio", "123456789","GGGGGG", 100);
@@ -171,6 +313,42 @@ void test(){
 	m.aggiungi_fattura(33333,1); //questa fattura quindi avrà numero 4, e la fattura 1 non verrà stampata.
 	m.lista_fattura(); //stampo di nuovo per verificare l'eliminazione
 	cout<<"==== FINE TEST FATTURA ===="<<endl<<endl;
+	
+	cout<<"==== TEST METODO DI PAGAMENTO ===="<<endl;
+	m.aggiungi_metodo_di_pagamento("Banconote", 100, 500);
+	m.aggiungi_metodo_di_pagamento("Assegno", 200, 1000);
+	m.lista_metodo_di_pagamento();
+	cout<<"==== FINE TEST METODO DI PAGAMENTO ===="<<endl<<endl;
+	
+	cout<<"==== TEST PRIVATO ===="<<endl;
+	m.aggiungi_privato("Gianni", "Lunelli", "1264564", "ABCDEFG1234", 1);
+	m.aggiungi_privato("Genoveffo", "Arte", "7878978977", "QWERTY123", 10);
+	m.lista_privato();
+	m.togli_privato("AAAAAAA"); //privato non esistente, dovrebbe dare errore
+	m.togli_privato("QWERTY123");
+	m.lista_privato();
+	cout<<"==== FINE TEST PRIVATO ===="<<endl<<endl;
+	
+	cout<<"==== TEST IMPRESA ===="<<endl;
+	m.aggiungi_impresa("SMA", "123456789", "0123456789", 10);
+	m.aggiungi_impresa("ASM", "987654321", "9876543210", 20);
+	m.lista_impresa();
+	m.togli_impresa("1231231"); //impresa inesistente
+	m.togli_impresa("9876543210");
+	m.lista_impresa();
+	m.togli_impresa("0123456789");
+	m.lista_impresa(); //cosa succede se tolgo tutte le imprese?
+	cout<<"==== FINE TEST IMPRESA ===="<<endl<<endl;
+	
+	cout<<"==== TEST PRODOTTO ===="<<endl;
+	m.aggiungi_prodotto(1, "rosso", "Lenovo", 500);
+	m.aggiungi_prodotto(10, "blu", "Apple", 1000);
+	m.lista_prodotto();
+	m.togli_prodotto(3); //non trova il prodotto
+	m.togli_prodotto(1); //elimina apple
+	m.lista_prodotto();
+	//cout<<(m.find_prodotto(0))<<endl; //da rivedere perch� non va
+	cout<<"==== FINE TEST PRODOTTO ===="<<endl<<endl;
 	
 }
 
