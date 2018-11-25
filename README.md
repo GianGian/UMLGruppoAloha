@@ -1,1 +1,2 @@
 # UMLGruppoAloha
+![Screenshot](aloha.jpg)
