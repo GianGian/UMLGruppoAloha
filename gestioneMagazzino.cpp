@@ -48,8 +48,14 @@ void Magazzino::lista_dipendenti(){
 */
 
 void Magazzino::aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti){
-	forn.push_back(Fornitore(_nome, _telefono, _denominazione, _prodottiVenduti));
-	cout<<"Aggiunto Fornitore "<<_denominazione<<endl;
+	list <Fornitore>::iterator it;
+	it=find(forn.begin(), forn.end(), Fornitore (_nome, _telefono, _denominazione, _prodottiVenduti));
+	if (it!=forn.end()){
+		cout<<"Fornitore "<<_denominazione<<" gia' inserito"<<endl;
+	}else{
+		forn.push_back(Fornitore(_nome, _telefono, _denominazione, _prodottiVenduti));
+		cout<<"Aggiunto Fornitore "<<_denominazione<<endl;
+	}
 }
 
 /**
@@ -145,6 +151,7 @@ void test(){
 	cout<<"==== TEST FORNITORI ===="<<endl;
 	m.aggiungi_fornitore("Silvia","3223245654","Lenovo","pc e tablet");
 	m.aggiungi_fornitore("Giulia","3323245654","Asus","pc e tablet");
+	m.aggiungi_fornitore("Giulia","3323245654","Asus","pc e tablet");//non mi permette di inserirne due uguali
 	m.aggiungi_fornitore("Gianlor","3423245654","Samsung","pc, tablet e smartphone");
 	m.lista_fornitori();
 	m.togli_fornitore("Sil","3223245654","Unitn","pc e tablet");//se provo a metterne uno finto (basta togliere una lettera si impalla
@@ -160,8 +167,8 @@ void test(){
 	m.aggiungi_fattura(2332,0);
 	m.lista_fattura(); //stampo le fattura
 	m.togli_fattura(5); //provo a rimuovere fattura non esistente
-	m.togli_fattura(1); //rimuovo fattura esistente NOTA: anche se la fattura viene eliminata, il numero rimane dedicato e non è possibile riusarlo
-	m.aggiungi_fattura(33333,1); //questa fattura quindi avrà numero 4, e la fattura 1 non verrà stampata.
+	m.togli_fattura(1); //rimuovo fattura esistente NOTA: anche se la fattura viene eliminata, il numero rimane dedicato e non Ã¨ possibile riusarlo
+	m.aggiungi_fattura(33333,1); //questa fattura quindi avrÃ  numero 4, e la fattura 1 non verrÃ  stampata.
 	m.lista_fattura(); //stampo di nuovo per verificare l'eliminazione
 	cout<<"==== FINE TEST FATTURA ===="<<endl<<endl;
 	
