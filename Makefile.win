@@ -4,11 +4,11 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o metodoDiPagamento.o servizio.o
-LINKOBJ  = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o metodoDiPagamento.o servizio.o
-LIBS     = -L"D:/Personali Gianlorenzo/Documenti/Portable/Dev-Cpp/MinGW64/lib" -L"D:/Personali Gianlorenzo/Documenti/Portable/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
-INCS     = -I"D:/Personali Gianlorenzo/Documenti/Portable/Dev-Cpp/MinGW64/include" -I"D:/Personali Gianlorenzo/Documenti/Portable/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Personali Gianlorenzo/Documenti/Portable/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
-CXXINCS  = -I"D:/Personali Gianlorenzo/Documenti/Portable/Dev-Cpp/MinGW64/include" -I"D:/Personali Gianlorenzo/Documenti/Portable/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Personali Gianlorenzo/Documenti/Portable/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Personali Gianlorenzo/Documenti/Portable/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+OBJ      = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o metodoDiPagamento.o servizio.o fattura.o
+LINKOBJ  = main.o gestioneMagazzino.o prodotto.o privato.o impresa.o consumatore.o anagrafica.o dipendente.o fornitore.o ordine.o ordineAcquisto.o ordineVendita.o metodoDiPagamento.o servizio.o fattura.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = "UML Aloha.exe"
 CXXFLAGS = $(CXXINCS) 
 CFLAGS   = $(INCS) 
@@ -65,3 +65,6 @@ metodoDiPagamento.o: metodoDiPagamento.cpp
 
 servizio.o: servizio.cpp
 	$(CPP) -c servizio.cpp -o servizio.o $(CXXFLAGS)
+
+fattura.o: fattura.cpp
+	$(CPP) -c fattura.cpp -o fattura.o $(CXXFLAGS)

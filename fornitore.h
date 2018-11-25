@@ -3,7 +3,9 @@
 #include <iostream>
 #include "anagrafica.h"
 using namespace std;
-
+/**
+*Classe fornitore.
+*/
 class Fornitore:public Anagrafica{
 private:
     char* denominazione;
@@ -14,6 +16,7 @@ public:
 	bool operator == (const Fornitore& f);
 	friend ostream &operator << (ostream & os, Fornitore &f);
 };
+
 
 ostream &operator << (ostream & os, Fornitore &f);
 #endif
