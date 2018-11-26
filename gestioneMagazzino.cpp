@@ -132,8 +132,13 @@ void Magazzino::lista_fattura(){
 * \brief Funzione per inserire nella lista dei metodi di pagamento un nuovo metodo
 */
 void Magazzino:: aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int _massimale){
-	met.push_back(MetodoDiPagamento(_tipo, _massimale, _commissione));
-	cout<<"Creato metodo di pagamento "<< _tipo<<endl;
+	MetodoDiPagamento m(_tipo, _massimale, _commissione);
+   if(find(met.begin(), met.end(), m)==met.end()){
+       met.push_back(m);
+	    cout<<"Creato metodo di pagamento "<< _tipo<<endl;
+	}
+	else cout<<"Metodo gia' trovato"<<endl;
+	
 }
 
 /**
@@ -151,8 +156,11 @@ void Magazzino::lista_metodo_di_pagamento(){
 */
 void Magazzino::aggiungi_privato(char* _nome,char* _cognome,char* _telefono, char* _codiceFiscale, int _sconto){
 	Privato p(_nome, _cognome, _telefono, _codiceFiscale, _sconto);
-	pri.insert(pair<char*, Privato> (_codiceFiscale, p));
-	cout<<"Inserito privato "<<p<<endl;
+	if(pri.find(_codiceFiscale)==pri.end()){
+		pri.insert(pair<char*, Privato> (_codiceFiscale, p));
+		cout<<"Inserito privato "<<p<<endl;
+	} else cout<<"Privato gia' inserito"<<endl;
+	
 }
 
 /**
@@ -189,8 +197,10 @@ void Magazzino::lista_privato(){
 */
 void Magazzino::aggiungi_impresa(char* _nome,char* _telefono, char* _piva, int _sconto){
 	Impresa i(_nome, _telefono, _piva, _sconto);
-	imp.insert(pair<char*, Impresa> (_piva, i));
-	cout<<"Inserita impresa "<<i<<endl;
+	if(imp.find(_piva) == imp.end()){
+		imp.insert(pair<char*, Impresa> (_piva, i));
+		cout<<"Inserita impresa "<<i<<endl;
+	} else cout<<"Impresa gia' inserita"<<endl;
 }
 
 /**
@@ -224,8 +234,8 @@ void Magazzino::lista_impresa(){
 /**
 * \brief Funzione per aggiungere prodotti in magazzino.
 */
-void Magazzino::aggiungi_prodotto(int _quantita, char *_colore, char *_marca, double _costo){
-	Prodotto p(_quantita, _colore, _marca, _costo);
+void Magazzino::aggiungi_prodotto(int _quantita, char *_colore, char *_marca, int _costo, int _data,char* _tipologia){
+	Prodotto p(_quantita, _colore, _marca, _costo, _data, _tipologia);
 	pro.insert(pair<int, Prodotto>(p.getBarcode(), p));
 	cout<<"Inserito prodotto: "<<p<<endl;
 }
@@ -259,13 +269,15 @@ void Magazzino::togli_prodotto(int _barcode){
 * Funzione usata al momento di creare l'ordine. (credo)
 * \return Prodotto
 */
-Prodotto Magazzino::find_prodotto(int _barcode){
+Prodotto* Magazzino::find_prodotto(int _barcode){
 	map<int, Prodotto>::iterator iter;
 	iter = pro.find(_barcode);
-	if(iter != pro.end()) return iter->second;
-	else cout<<"Errore, prodotto non trovato"<<endl;
-	
-	/// \todo Capire cosa fare se non trovo il prodotto desiderato.
+	if(iter != pro.end()) return &iter->second;
+	else {
+		cout<<"Errore, prodotto non trovato"<<endl;
+		return NULL;
+	}
+
 	//COSA DEVE FARE QUI???
 }
 	
@@ -332,6 +344,7 @@ void test(){
 	cout<<"==== TEST IMPRESA ===="<<endl;
 	m.aggiungi_impresa("SMA", "123456789", "0123456789", 10);
 	m.aggiungi_impresa("ASM", "987654321", "9876543210", 20);
+	m.aggiungi_impresa("ASM", "987654321", "9876543210", 20);
 	m.lista_impresa();
 	m.togli_impresa("1231231"); //impresa inesistente
 	m.togli_impresa("9876543210");
@@ -341,14 +354,17 @@ void test(){
 	cout<<"==== FINE TEST IMPRESA ===="<<endl<<endl;
 	
 	cout<<"==== TEST PRODOTTO ===="<<endl;
-	m.aggiungi_prodotto(1, "rosso", "Lenovo", 500);
-	m.aggiungi_prodotto(10, "blu", "Apple", 1000);
+	m.aggiungi_prodotto(1, "rosso", "Lenovo", 500,181126,"PC");
+	m.aggiungi_prodotto(10, "blu", "Apple", 1000,181126, "PC") ;
 	m.lista_prodotto();
 	m.togli_prodotto(3); //non trova il prodotto
 	m.togli_prodotto(1); //elimina apple
 	m.lista_prodotto();
-	//cout<<(m.find_prodotto(0))<<endl; //da rivedere perchè non va
+	cout<<*(m.find_prodotto(0))<<endl; //da rivedere perchè non va
 	cout<<"==== FINE TEST PRODOTTO ===="<<endl<<endl;
+	
+	cout<<"==== TEST SERVIZIO ===="<<endl;
+	cout<<"==== FINE TEST SERVIZIO ===="<<endl<<endl;
 	
 }
 

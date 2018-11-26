@@ -14,6 +14,7 @@ public:
 MetodoDiPagamento(char *_nome, int _massimale, int _commissione);
 int get_commissione(); ///< permette di ottenere la commissione dato il metodo di pagamento
 friend ostream & operator<<(ostream &os, MetodoDiPagamento &m); 
+bool operator== (const MetodoDiPagamento &m);
 };
 
 ostream & operator<<(ostream &os, MetodoDiPagamento &m); ///< Overload per poter stampare da gestioneMagazzino tramite cout<<metododipagamento.

@@ -4,12 +4,14 @@
 using namespace std;
 int Prodotto:: last_barcode = 0;
 
-Prodotto::Prodotto(int _quantita, char* _colore, char* _marca, double _costo){
+Prodotto::Prodotto(int _quantita, char* _colore, char* _marca, int _costo, int _data,char* _tipologia){
 	quantita = _quantita;
 	colore = _colore;
 	marca = _marca;
-	costo = _costo;
+	Data d(_data);
+	prezzo.insert(pair<Data, int> (d, _costo));
 	barcode = last_barcode;
+	tipologia= _tipologia;
 	last_barcode++;
 }
 
@@ -18,6 +20,6 @@ Prodotto::getBarcode(){
 }
 
 ostream & operator<<(ostream &os, Prodotto &p){
-	os<<p.marca<<" "<<p.colore<<" PREZZO: "<<p.costo<< " QUANTITA': "<< p.quantita <<" BARCODE: "<<p.barcode;
+	os<<p.marca<<" "<<p.tipologia<< " "<<p.colore<< " QUANTITA': "<< p.quantita <<" BARCODE: "<<p.barcode;
 	return os;
 }

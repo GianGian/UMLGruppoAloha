@@ -23,7 +23,7 @@ class Magazzino{
 private:
     char* via;
     char* denominazione;
-    double fondoCassa;
+    int fondoCassa;
     map <int,Dipendente> dip;
     map <int,Fattura> fat;
     map <char*, Privato> pri;
@@ -50,10 +50,10 @@ public:
 	void aggiungi_impresa(char* _nome,char* _telefono, char* _piva, int _sconto);
 	void togli_impresa(char* _piva);
 	void lista_impresa();
-	void aggiungi_prodotto(int _quantita, char *_colore, char *_marca, double _costo);
+	void aggiungi_prodotto(int _quantita, char *_colore, char *_marca, int _costo, int _data, char* _tipologia);
 	void lista_prodotto();
 	void togli_prodotto(int _barcode);
-	Prodotto find_prodotto(int _barcode);
+	Prodotto* find_prodotto(int _barcode);
 };
 void test();
 #endif

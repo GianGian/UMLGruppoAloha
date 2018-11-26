@@ -1,7 +1,7 @@
 [Project]
 FileName=UML Aloha.dev
 Name=UML Aloha
-UnitCount=29
+UnitCount=31
 Type=1
 Ver=2
 ObjFiles=
@@ -332,6 +332,26 @@ BuildCmd=
 
 [Unit29]
 FileName=fattura.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit30]
+FileName=data.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit31]
+FileName=data.cpp
 CompileCpp=1
 Folder=
 Compile=1
