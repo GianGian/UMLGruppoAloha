@@ -4,12 +4,14 @@
 using namespace std;
 
 class Anagrafica{
-protected:
+private:
     char* nome;
     char* n_Telefono;
 
 public:
 Anagrafica(char* _nome, char* _n_Telefono);
 void put_telefono(char* _n_Telefono);
+char* get_nome() const;
+char* get_n_Telefono() const;
 };
 #endif

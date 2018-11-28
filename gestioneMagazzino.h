@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <map>
 #include <list>
+#include <set>
 using namespace std;
 
 
@@ -29,16 +30,17 @@ private:
     map <char*, Privato> pri;
     map <char*, Impresa> imp;
     map <int, Prodotto> pro;
-    list <Fornitore> forn;
-    list <MetodoDiPagamento> met;
+    set <Fornitore> forn;
+    set <MetodoDiPagamento> met;
    
 public:
 	void aggiungi_dipendente(char* _nome, char* _telefono,char* _ruolo, int _matricola);
 	void togli_dipendente(int _matricola);
 	void lista_dipendenti();
 	void aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti);
-	void togli_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti);
+	void togli_fornitore(char* _denominazione);
 	void lista_fornitori();
+	set<Fornitore>::iterator trova_fornitore(char* denominazione)const;
 	void aggiungi_fattura(int _totale, bool _vendita);
 	void togli_fattura(int _numero);
 	void lista_fattura();

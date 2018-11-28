@@ -9,6 +9,6 @@ Privato::Privato(char* _nome,char* _cognome,char* _telefono, char* _codiceFiscal
 }
 
 ostream& operator<<(ostream &os, Privato &p){
-	os<<p.nome<<" "<<p.cognome<<" CF: "<<p.codiceFiscale<<" TEL: "<<p.n_Telefono<<" SCONTO: "<<p.getSconto();
+	os<<p.get_nome()<<" "<<p.cognome<<" CF: "<<p.codiceFiscale<<" TEL: "<<p.get_n_Telefono()<<" SCONTO: "<<p.getSconto();
 	return os;
 }

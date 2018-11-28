@@ -17,13 +17,15 @@ private:
 
 public:
 	Fornitore(char* _nome,char* _telefono,char* _denominazione,char* _prodottiVenduti);
-	bool operator == (const Fornitore& f);
-	friend ostream &operator << (ostream & os, Fornitore &f);
+	bool operator <(const Fornitore& f) const;
+	friend ostream &operator << (ostream & os, const Fornitore &f);
 	void aggiungi_servizio(char* _nome, int _durata, int _franchigia, int _costoServizio);
 	void togli_servizio(char* _nome, int _durata, int _franchigia, int _costoServizio);
 	void lista_servizio();
+	char* get_denominazione()const;
+	char* get_prodottiVenduti()const;
 };
 
 
-ostream &operator << (ostream & os, Fornitore &f);
+ostream &operator << (ostream & os,const Fornitore &f);
 #endif

@@ -48,12 +48,12 @@ void Magazzino::lista_dipendenti(){
 */
 
 void Magazzino::aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti){
-	list <Fornitore>::iterator it;
-	it=find(forn.begin(), forn.end(), Fornitore (_nome, _telefono, _denominazione, _prodottiVenduti));
+	set <Fornitore>::iterator it;
+	it=forn.find(Fornitore (_nome, _telefono, _denominazione, _prodottiVenduti));
 	if (it!=forn.end()){
 		cout<<"Fornitore "<<_denominazione<<" gia' inserito"<<endl;
 	}else{
-		forn.push_back(Fornitore(_nome, _telefono, _denominazione, _prodottiVenduti));
+		forn.insert(Fornitore(_nome, _telefono, _denominazione, _prodottiVenduti));
 		cout<<"Aggiunto Fornitore "<<_denominazione<<endl;
 	}
 }
@@ -64,27 +64,45 @@ void Magazzino::aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazio
 * Per poterlo fare e' necessario conoscere esattamente tutti i parametri con cui questo era 
 * inserito nel sistema. HA SENSO???
 */
-void Magazzino::togli_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti){
-	list <Fornitore>::iterator deliter;
-	Fornitore f(_nome, _telefono, _denominazione, _prodottiVenduti);
+void Magazzino::togli_fornitore(char* denominazione){
+	/*
+	set <Fornitore>::const_iterator deliter;
+	//Fornitore f(_nome, _telefono, _denominazione, _prodottiVenduti);
 	//deliter=find(forn.begin(), forn.end(), Fornitore (_nome, _telefono, _denominazione, _prodottiVenduti));
-	deliter=find(forn.begin(), forn.end(), f);
+	deliter=forn.find(f);
 	if (deliter!=forn.end()){
 		forn.erase(deliter);
 		cout<<"Eliminato fornitore: "<<_denominazione<<endl;
 	}else{
 		cout<<"Fornitore "<<_denominazione<<" non trovato"<<endl;
 	}
+	*/
+	set<Fornitore>::iterator it;
+	it = trova_fornitore(denominazione);
+	if(it!=forn.end()){
+		cout<<"Tolto "<<*it;
+		forn.erase(it);
+	}else cout<<"Fornitore non trovato"<<endl;
+}
+
+set<Fornitore>::iterator Magazzino::trova_fornitore(char* nome)const{
+	set<Fornitore>::iterator iter;
+	for(iter = forn.begin(); iter!=forn.end(); iter++){
+		if(iter->get_denominazione()== nome) return iter;
+	}
+	return forn.end();
 }
 
 /**
 * \brief Funzione per stampare la lista dei fornitori.
 */
 void Magazzino::lista_fornitori(){
-	list <Fornitore>:: iterator iter;
+	
+	set <Fornitore>:: iterator iter;
 	for(iter=forn.begin(); iter!=forn.end();++iter){
 		cout<<*iter;
 	}
+	
 }
 
 /**
@@ -133,8 +151,8 @@ void Magazzino::lista_fattura(){
 */
 void Magazzino:: aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int _massimale){
 	MetodoDiPagamento m(_tipo, _massimale, _commissione);
-   if(find(met.begin(), met.end(), m)==met.end()){
-       met.push_back(m);
+   if(met.find(m)==met.end()){
+       met.insert(m);
 	    cout<<"Creato metodo di pagamento "<< _tipo<<endl;
 	}
 	else cout<<"Metodo gia' trovato"<<endl;
@@ -145,7 +163,7 @@ void Magazzino:: aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int
 * \brief Funzione per visualizzare tutti i metodi di pagamento disponibili
 */
 void Magazzino::lista_metodo_di_pagamento(){
-	list<MetodoDiPagamento>::iterator iter;
+	set<MetodoDiPagamento>::iterator iter;
 	for(iter = met.begin(); iter!=met.end();++iter){
 		cout<<(*iter)<<endl;
 	}
@@ -308,9 +326,11 @@ void test(){
 	m.aggiungi_fornitore("Giulia","3323245654","Asus","pc e tablet");//non mi permette di inserirne due uguali
 	m.aggiungi_fornitore("Gianlor","3423245654","Samsung","pc, tablet e smartphone");
 	m.lista_fornitori();
-	m.togli_fornitore("Sil","3223245654","Unitn","pc e tablet");//se provo a metterne uno finto (basta togliere una lettera si impalla
-	m.togli_fornitore("Silvia","3223245654","Lenovo","pc e tablet");
-	m.togli_fornitore("Silvia","322324564","Lenono","pc e tablet");
+	m.togli_fornitore("Unitn");//se provo a metterne uno finto (basta togliere una lettera si impalla
+	m.togli_fornitore("Lenovo");
+	m.togli_fornitore("Lenono");
+	Fornitore f(*m.trova_fornitore("Samsung"));
+	cout<<(f);
 	m.lista_fornitori();
 	cout<<"==== FINE TEST FORNITORI ===="<<endl<<endl;
 	

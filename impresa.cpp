@@ -8,6 +8,6 @@ Impresa::Impresa(char* _nome, char* _telefono, char* _piva, int _sconto):Consuma
 }
 
 ostream& operator<< (ostream &os, Impresa &i){
-	os<<i.nome<<" PIVA: "<<i.piva<<" TEL: "<<i.n_Telefono<<" SCONTO: "<<i.getSconto();
+	os<<i.get_nome()<<" PIVA: "<<i.piva<<" TEL: "<<i.get_n_Telefono()<<" SCONTO: "<<i.getSconto();
 	return os;
 }

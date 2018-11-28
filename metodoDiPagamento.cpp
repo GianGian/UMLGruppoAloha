@@ -13,11 +13,11 @@ int MetodoDiPagamento::get_commissione(){
 	return commissione;
 }
 
-bool MetodoDiPagamento::operator== (const MetodoDiPagamento &m){
-	return (m.commissione==commissione && m.massimale == massimale && m.nome == nome);
+bool MetodoDiPagamento::operator< (const MetodoDiPagamento &m)const{
+	return (m.nome<nome);
 }
 
-ostream& operator<<(ostream &os, MetodoDiPagamento &m){
+ostream& operator<<(ostream &os, const MetodoDiPagamento &m){
 	os<<m.nome<<" massimale: "<<m.massimale<<" commissione: "<<m.commissione;
 	return os;
 }
