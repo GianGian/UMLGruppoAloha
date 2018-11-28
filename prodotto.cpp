@@ -19,7 +19,34 @@ Prodotto::getBarcode(){
 	return barcode;
 }
 
+void Prodotto::addCosto(int _costo, int _data){
+	if(prezzo.find(_data)==prezzo.end()){
+		prezzo.insert(pair<Data,int> (Data(_data), _costo));
+		cout<<"prezzo inserito"<<endl;
+	}
+	else{
+		cout<<"Prezzo per questa data gia' inserito!"<<endl;
+	}
+}
+
+int Prodotto::getPrezzo(int data){
+	map<Data,int>::iterator it;
+	bool trovato=0;
+	for(it = prezzo.begin(); it!=prezzo.end(); ++it){
+	   if(it->first.data<=data){
+	   		trovato = 1;
+	   		it;
+	   		return it->second;
+	   }
+	}
+	cout<<"Prezzo non trovato"<<endl;
+	return -1; ///<Ritorno -1 che non è plausibile, quindi so che il prezzo non esiste.
+}
 ostream & operator<<(ostream &os, Prodotto &p){
-	os<<p.marca<<" "<<p.tipologia<< " "<<p.colore<< " QUANTITA': "<< p.quantita <<" BARCODE: "<<p.barcode;
+	map<Data,int>::iterator it;
+	os<<p.marca<<" "<<p.tipologia<< " "<<p.colore<< " QUANTITA': "<< p.quantita <<" BARCODE: "<<p.barcode<< " PREZZO: ";
+	for(it=p.prezzo.begin(); it!=p.prezzo.end(); it++){
+		os<<it->second<<" ["<<it->first.data<<"] ";
+	}
 	return os;
 }

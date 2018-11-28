@@ -17,6 +17,11 @@ bool MetodoDiPagamento::operator< (const MetodoDiPagamento &m)const{
 	return (m.nome<nome);
 }
 
+char* MetodoDiPagamento::get_nome() const{
+	return nome;
+}
+
+
 ostream& operator<<(ostream &os, const MetodoDiPagamento &m){
 	os<<m.nome<<" massimale: "<<m.massimale<<" commissione: "<<m.commissione;
 	return os;

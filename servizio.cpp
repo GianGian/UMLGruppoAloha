@@ -13,9 +13,13 @@ int Servizio::get_costo(){
 	return costoServizio;
 }
 
-bool Servizio::operator==(const Servizio &s){
-	return (nome == s.nome&& durata == s.durata && franchigia == s.franchigia && costoServizio == s.costoServizio);
+char* Servizio::get_nome()const{
+	return nome;
 }
-ostream& operator << (ostream& os, Servizio& s){
+
+bool Servizio::operator<(const Servizio &s)const{
+	return (s.nome<nome);
+}
+ostream& operator << (ostream& os, const Servizio& s){
 	os<<s.nome<<" Durata "<<s.durata<<" Franchigia"<<s.franchigia<<" Costo Servizio "<<s.costoServizio<<endl;
 }

@@ -5,5 +5,5 @@ Data::Data(int _data){
 }
 
 bool Data::operator<(const Data &d)const{
-	return data<d.data;
+	return data>d.data;
 }

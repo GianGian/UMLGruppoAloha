@@ -11,8 +11,9 @@ private:
 public:
 	Servizio(char* _nome, int _durata, int _franchigia, int _costoServizio);
 	int get_costo();
-	friend ostream& operator << (ostream& os, Servizio& s);
-	bool operator==(const Servizio &s);
+	char* get_nome()const;
+	friend ostream& operator << (ostream& os, const Servizio& s);
+	bool operator<(const Servizio &s)const;
 };
 ostream& operator << (ostream& os, Servizio& s);
 #endif

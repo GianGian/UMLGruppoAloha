@@ -20,6 +20,7 @@ public:
 Prodotto(int _quantita, char* _colore, char* _marca, int _costo, int _data, char* _tipologia);
 int getBarcode();
 void addCosto(int _costo, int _data);
+int getPrezzo(int data);
 friend ostream & operator<<(ostream &os, Prodotto &p);
 };
 

@@ -29,26 +29,39 @@ char* Fornitore::get_prodottiVenduti()const{
 Ridefinizione operatore << per permettere la chiamata tramite cout<<Fornitore
 */
 ostream& operator << (ostream & os, const Fornitore &f){
-	os<<"Fornitore con denominazione: "<<f.denominazione<<" e prodotti venduti: "<<f.prodottiVenduti<<endl;
+	os<<"Fornitore con denominazione: "<<f.denominazione<<" e prodotti venduti: "<<f.prodottiVenduti<<" servizi associati: ";
+	set<Servizio>::iterator iter;
+	for(iter=f.ser.begin();iter!=f.ser.end();++iter){
+		os<<"["<<*iter<<"] ";
+	}
+	cout<<endl;
 	return os;
 }
 
 void Fornitore::aggiungi_servizio(char* _nome, int _durata, int _franchigia, int _costoServizio){
-	ser.push_back(Servizio( _nome, _durata, _franchigia, _costoServizio));
+	ser.insert(Servizio( _nome, _durata, _franchigia, _costoServizio));
 }
 
-void Fornitore::togli_servizio(char* _nome, int _durata, int _franchigia, int _costoServizio){
-	 list <Servizio>::iterator iter;
-	 iter=find(ser.begin(),ser.end(),Servizio( _nome, _durata, _franchigia, _costoServizio));
-	 if(iter != ser.end()){
-	 	cout<<"Servizio rimosso"<<endl;
-	 	ser.remove(*iter);
-	 }	
-	 else cout<<"Errore servizio non trovato"<<endl;
+void Fornitore::togli_servizio(char* _nome){
+	set <Servizio>::iterator iter;
+	iter = get_servizio(_nome);
+	if(iter != ser.end()){
+		ser.erase(iter);
+		cout<<"Servizio rimosso"<<endl;
+	}
+	else cout<<"Servizio non trovato"<<endl;
+
 }
 
+set<Servizio>::iterator Fornitore::get_servizio(const char* _nome)const {
+	set <Servizio>::iterator iter;
+	for(iter=ser.begin(); iter!=ser.end();++iter){
+		if(iter->get_nome() == _nome) return iter;
+	}
+    return ser.end();
+}
 void Fornitore::lista_servizio(){
-	list<Servizio>::iterator iter;
+	set<Servizio>::iterator iter;
 	for(iter=ser.begin();iter!=ser.end();++iter){
 		cout<<*iter;
 	}

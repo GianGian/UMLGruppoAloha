@@ -1,6 +1,7 @@
 #ifndef __ORDINE_H__
 #define __ORDINE_H__
 #include <iostream>
+#include "fattura.h"
 using namespace std;
 /**
 *Classe ordine.
@@ -8,8 +9,12 @@ using namespace std;
 */
 class Ordine{
 private:
-	static int n_ordine;  
+	static int last_n_ordine; 
+	int n_ordine;
+	int matricola;
+	Fattura *fattura;
 public:
-	Ordine();
+	Ordine(int _matricola);
+	void add_fattura(Fattura& f);
 };
 #endif

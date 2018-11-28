@@ -13,6 +13,7 @@ private:
 public:
 MetodoDiPagamento(char *_nome, int _massimale, int _commissione);
 int get_commissione(); ///< permette di ottenere la commissione dato il metodo di pagamento
+char* get_nome()const;
 friend ostream & operator<<(ostream &os, const MetodoDiPagamento &m); 
 bool operator< (const MetodoDiPagamento &m)const;
 };

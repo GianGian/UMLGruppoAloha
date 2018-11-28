@@ -40,11 +40,20 @@ void Magazzino::lista_dipendenti(){
 }
 
 /**
+* \brief Funzione per cercare un dipendente data la matricola.
+* \return 1 se trovato, 0 se non trovato.
+*/
+bool Magazzino::trova_dipendente(int matricola){
+	if(dip.find(matricola)!=dip.end()) return 1;
+	else return 0;
+}
+/**
 * \brief Funzione per aggiungere un fornitore.
 * \arg _nome: corrisponde al nome del contatto del fornitore.
 * \arg _telefono: corrisponde al numero di telefono
-* \arg _denominazione: corrisponde al nome della ditta a cui il fornitore fa riferimento.
+* \arg _denominazione: corrisponde al nome della ditta a cui il fornitore fa riferimento. CONSIDERATO UNIVOCO.
 * \arg _prodottiVenduti: corrisponde ad una breve descrizione dei prodotti venduti. 
+* 
 */
 
 void Magazzino::aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti){
@@ -61,8 +70,6 @@ void Magazzino::aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazio
 /**
 * \brief Funzione per togliere un fornitore.
 *
-* Per poterlo fare e' necessario conoscere esattamente tutti i parametri con cui questo era 
-* inserito nel sistema. HA SENSO???
 */
 void Magazzino::togli_fornitore(char* denominazione){
 	/*
@@ -85,7 +92,7 @@ void Magazzino::togli_fornitore(char* denominazione){
 	}else cout<<"Fornitore non trovato"<<endl;
 }
 
-set<Fornitore>::iterator Magazzino::trova_fornitore(char* nome)const{
+set<Fornitore>::iterator Magazzino::trova_fornitore(char* nome){
 	set<Fornitore>::iterator iter;
 	for(iter = forn.begin(); iter!=forn.end(); iter++){
 		if(iter->get_denominazione()== nome) return iter;
@@ -105,6 +112,21 @@ void Magazzino::lista_fornitori(){
 	
 }
 
+void Magazzino::add_servizio_fornitore(char* _denominazione, char* _nome, int durata, int franchigia, int costo){
+	set<Fornitore>::iterator it;
+	it = trova_fornitore(_denominazione);
+	if(it != forn.end()){
+		Fornitore f = *it;
+		forn.erase(it);
+		f.aggiungi_servizio(_nome, durata, franchigia, costo);
+		forn.insert(f);
+	}
+		
+}
+
+Servizio Magazzino::trova_servizio(char* _denominazione, char* _nome){
+	return *((*trova_fornitore(_denominazione)).get_servizio(_nome));
+}
 /**
 * \brief Funzione per aggiungere una fattura.
 *
@@ -170,6 +192,17 @@ void Magazzino::lista_metodo_di_pagamento(){
 }
 
 /**
+* \brief Funzione per cercare un metodo di pagamento dato il nome
+*/
+set<MetodoDiPagamento>::iterator Magazzino::trova_metodo_di_pagamento(char* nome) const{
+	set<MetodoDiPagamento>::iterator it;
+	for(it= met.begin();it!=met.end(); ++it){
+		if(it->get_nome() == nome) return it;
+	}
+	return met.end();
+}
+
+/**
 * \brief Funzione per aggiungere un consumatore privato.
 */
 void Magazzino::aggiungi_privato(char* _nome,char* _cognome,char* _telefono, char* _codiceFiscale, int _sconto){
@@ -210,6 +243,15 @@ void Magazzino::lista_privato(){
 	}
 }
 
+Privato* Magazzino::trova_privato(char* _cf){
+	map<char*, Privato>::iterator it;
+	it = pri.find(_cf);
+	if(it!=pri.end()) return &it->second;
+	else{
+		cout<<"Privato non trovato!"<<endl;
+		return NULL;
+	} 
+}
 /**
 * \brief Funzione per inserire una nuova impresa nel database.
 */
@@ -248,7 +290,18 @@ void Magazzino::lista_impresa(){
 		cout<<iter->second<<endl;
 	}
 }
-	
+
+Impresa* Magazzino::trova_impresa(char* _piva){
+	map <char*, Impresa>::iterator it;
+	it = imp.find(_piva);
+	if(it != imp.end()){
+		return &it->second;
+	}else{
+		cout<<"Impresa non trovata"<<endl;
+		return NULL;
+	}
+}
+
 /**
 * \brief Funzione per aggiungere prodotti in magazzino.
 */
@@ -295,21 +348,44 @@ Prodotto* Magazzino::find_prodotto(int _barcode){
 		cout<<"Errore, prodotto non trovato"<<endl;
 		return NULL;
 	}
-
-	//COSA DEVE FARE QUI???
 }
-	
-	
+
+/**
+* \brief Funzione per aggiungere un costo ad un prodotto.
+*
+* La data va in serita in formato AAMMGG. La data inserita si 
+* riferisce al giorno in cui iniziera' a valere il nuovo prezzo
+* inserito e di conseguenza la fine del prezzo vecchio.
+*
+*/
+void Magazzino::aggiungi_prezzo(int barcode, int prezzo, int data){
+	map<int, Prodotto>::iterator iter;
+	iter = pro.find(barcode);
+	if(iter != pro.end()){
+		iter->second.addCosto(prezzo, data);
+	}
+	else cout<<"Prodotto non trovato!"<<endl;
+}
+
+/**
+* \brief Funzione per trovare un prezzo di un prodotto dato un barcode e una data.
+*
+* \return >0 se il prezzo e' stato trovato, -1 se ci sono stati problemi
+*/
+int Magazzino::trova_prezzo(int barcode, int data){
+	map<int, Prodotto>::iterator iter;
+	iter = pro.find(barcode);
+	if(iter != pro.end()){
+    	return iter->second.getPrezzo(data);
+	}
+	else {
+		cout<<"Prodotto non trovato!"<<endl;
+		return -1;
+	}	
+}
+
 void test(){
 	Magazzino m;
-	/*Privato Gigino("Gigino", "Dimaio", "123456789","GGGGGG", 100);
-	Impresa Panineria("Ddimaio","123456789","001231567864",0);
-	Fornitore SMA ("morino","03949505","sma","patate");
-	Servizio vetro("vetro",60,1000,110);
-	cout<<vetro.get_costo();
-	cout<<Gigino.getSconto();
-	cout<<endl;
-	cout<<"//=================="<<endl;*/
 	cout<<"==== TEST DIPENDENTE ===="<<endl;
 	m.aggiungi_dipendente("Anna","345679","Direttore",123456);	
 	m.aggiungi_dipendente("Francesca","15678","Segretaria",1256);
@@ -318,6 +394,8 @@ void test(){
 	m.togli_dipendente(12576);
 	m.togli_dipendente(1256);
 	m.lista_dipendenti();
+	cout<<m.trova_dipendente(12345)<<endl;
+	cout<<m.trova_dipendente(123456)<<endl;	
 	cout<<"==== FINE TEST DIPENDENTE ===="<<endl<<endl;
 	
 	cout<<"==== TEST FORNITORI ===="<<endl;
@@ -330,6 +408,7 @@ void test(){
 	m.togli_fornitore("Lenovo");
 	m.togli_fornitore("Lenono");
 	Fornitore f(*m.trova_fornitore("Samsung"));
+	m.add_servizio_fornitore("Samsung", "Kasko",1,10,100);
 	cout<<(f);
 	m.lista_fornitori();
 	cout<<"==== FINE TEST FORNITORI ===="<<endl<<endl;
@@ -349,6 +428,7 @@ void test(){
 	cout<<"==== TEST METODO DI PAGAMENTO ===="<<endl;
 	m.aggiungi_metodo_di_pagamento("Banconote", 100, 500);
 	m.aggiungi_metodo_di_pagamento("Assegno", 200, 1000);
+	cout<<*m.trova_metodo_di_pagamento("Banconote")<<endl;
 	m.lista_metodo_di_pagamento();
 	cout<<"==== FINE TEST METODO DI PAGAMENTO ===="<<endl<<endl;
 	
@@ -359,6 +439,7 @@ void test(){
 	m.togli_privato("AAAAAAA"); //privato non esistente, dovrebbe dare errore
 	m.togli_privato("QWERTY123");
 	m.lista_privato();
+	cout<<*m.trova_privato("ABCDEFG1234")<<endl; //test ricerca privato
 	cout<<"==== FINE TEST PRIVATO ===="<<endl<<endl;
 	
 	cout<<"==== TEST IMPRESA ===="<<endl;
@@ -369,6 +450,7 @@ void test(){
 	m.togli_impresa("1231231"); //impresa inesistente
 	m.togli_impresa("9876543210");
 	m.lista_impresa();
+	cout<<*m.trova_impresa("0123456789")<<endl;
 	m.togli_impresa("0123456789");
 	m.lista_impresa(); //cosa succede se tolgo tutte le imprese?
 	cout<<"==== FINE TEST IMPRESA ===="<<endl<<endl;
@@ -376,16 +458,32 @@ void test(){
 	cout<<"==== TEST PRODOTTO ===="<<endl;
 	m.aggiungi_prodotto(1, "rosso", "Lenovo", 500,181126,"PC");
 	m.aggiungi_prodotto(10, "blu", "Apple", 1000,181126, "PC") ;
+    m.aggiungi_prezzo(1, 100, 181129);
+    cout<<m.trova_prezzo(1, 181125)<<endl;
+    cout<<m.trova_prezzo(1, 181126)<<endl;
+    cout<<m.trova_prezzo(1, 181201)<<endl;
+	//cout<<*(m.find_prodotto(1))<<endl;
 	m.lista_prodotto();
 	m.togli_prodotto(3); //non trova il prodotto
 	m.togli_prodotto(1); //elimina apple
 	m.lista_prodotto();
-	cout<<*(m.find_prodotto(0))<<endl; //da rivedere perchè non va
+	cout<<*(m.find_prodotto(0))<<endl; 
 	cout<<"==== FINE TEST PRODOTTO ===="<<endl<<endl;
 	
 	cout<<"==== TEST SERVIZIO ===="<<endl;
 	cout<<"==== FINE TEST SERVIZIO ===="<<endl<<endl;
 	
+	cout<<"==== TEST ORDINE VENDITA ===="<<endl; //questa parte è tutta da rivedere e anche i metodi collegati di ricerca 
+	OrdineVendita o("Brombeis",123456);
+	//o.add_privato(m.trova_privato("1234")); //VORREI FARE COSI' ma non posso.
+	Consumatore c("Andre","123",10);
+	o.add_consumatore(c);
+	o.add_prodotto(*m.find_prodotto(0)); //ricerco tramite barcode
+	MetodoDiPagamento mp(*m.trova_metodo_di_pagamento("Banconote"));
+	o.add_metodo_di_pagamento(mp);
+	Servizio serviz(m.trova_servizio("Samsung","Kasko")); //NON VA BENE!!!
+	o.add_servizio(serviz);
+	cout<<o;	
 }
 
 

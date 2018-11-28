@@ -14,3 +14,7 @@ int Consumatore::getSconto(){
 void Consumatore::putSconto(int s){
 	sconto = s;
 }
+
+ostream& operator<< (ostream &os, Consumatore &c){
+	os<<c.get_nome()<<" "<<c.get_n_Telefono();
+}
