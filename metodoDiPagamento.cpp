@@ -7,6 +7,7 @@ MetodoDiPagamento::MetodoDiPagamento(char *_nome, int _massimale, int _commissio
 	nome = _nome;
 	massimale = _massimale;
 	commissione = _commissione;
+	stato=1;
 }
 
 int MetodoDiPagamento::get_commissione(){
@@ -25,4 +26,12 @@ char* MetodoDiPagamento::get_nome() const{
 ostream& operator<<(ostream &os, const MetodoDiPagamento &m){
 	os<<m.nome<<" massimale: "<<m.massimale<<" commissione: "<<m.commissione;
 	return os;
+}
+
+bool MetodoDiPagamento::get_stato()const{
+	return stato;
+}
+
+void MetodoDiPagamento::disattiva_stato(){
+	stato=0;
 }

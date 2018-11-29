@@ -7,7 +7,7 @@ Consumatore::Consumatore(char* nome, char* telefono, int _sconto):Anagrafica(nom
    sconto = _sconto;
 }
 
-int Consumatore::getSconto(){
+int Consumatore::getSconto()const{
 	return sconto;
 }
 
@@ -15,9 +15,9 @@ void Consumatore::putSconto(int s){
 	sconto = s;
 }
 
-ostream& operator<< (ostream &os, const Consumatore &c){
+/*ostream& operator<< (ostream &os, const Consumatore &c){
 	os<<c.get_nome()<<" "<<c.get_n_Telefono();
-}
+}*/
 
 void Consumatore::stampa()const{
 	cout << "sconto:" << sconto << endl;

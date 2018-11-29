@@ -10,10 +10,10 @@ private:
     char* cognome;
 public:
 Privato(char* _nome,char* _cognome,char* _telefono, char* _codiceFiscale, int _sconto);
-friend ostream& operator<<(ostream &os, Privato &p);
+//friend ostream& operator<<(ostream &os, Privato &p);
 void stampa()const;
 };
 
-ostream& operator<<(ostream &os, Privato &p);
+//ostream& operator<<(ostream &os, Privato &p);
 #endif
 

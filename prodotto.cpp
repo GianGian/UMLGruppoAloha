@@ -13,6 +13,7 @@ Prodotto::Prodotto(int _quantita, char* _colore, char* _marca, int _costo, int _
 	barcode = last_barcode;
 	tipologia= _tipologia;
 	last_barcode++;
+	stato=1;
 }
 
 Prodotto::getBarcode(){
@@ -30,9 +31,9 @@ void Prodotto::addCosto(int _costo, int _data){
 }
 
 int Prodotto::getPrezzo(int data){
-	map<Data,int>::iterator it;
+	map<Data,int>::reverse_iterator it;
 	bool trovato=0;
-	for(it = prezzo.begin(); it!=prezzo.end(); ++it){
+	for(it = prezzo.rbegin(); it!=prezzo.rend(); ++it){
 	   if(it->first.data<=data){
 	   		trovato = 1;
 	   		it;
@@ -49,4 +50,11 @@ ostream & operator<<(ostream &os, const Prodotto &p){
 		os<<it->second<<" ["<<it->first.data<<"] ";
 	}
 	return os;
+}
+
+bool Prodotto::get_stato(){
+	return stato;
+}
+void Prodotto::disattiva_stato(){
+	stato=0;
 }

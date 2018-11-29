@@ -22,7 +22,8 @@ void Magazzino::togli_dipendente(int _matricola){
 	map <int,Dipendente>::iterator it;
 	it=dip.find(_matricola);
 	if(it!=dip.end()){
-		dip.erase(it);
+		//dip.erase(it);
+		it->second.disattiva_stato();
 		cout<<"Eliminato dipendente "<<_matricola<<endl;
 	}else{
 		cout<<"Dipendente non trovato"<<endl;
@@ -36,6 +37,9 @@ void Magazzino::lista_dipendenti(){
 	map <int,Dipendente>::iterator it;
 	for(it=dip.begin();it!=dip.end();++it){
 		cout<<it->second;
+		if(it->second.get_stato()==0){
+			cout<<" DISATTIVATO";
+		}	
 	}
 }
 
@@ -44,7 +48,13 @@ void Magazzino::lista_dipendenti(){
 * \return 1 se trovato, 0 se non trovato.
 */
 bool Magazzino::trova_dipendente(int matricola){
-	if(dip.find(matricola)!=dip.end()) return 1;
+	map <int,Dipendente>::iterator it;
+	it=dip.find(matricola);
+	if(it!=dip.end()){
+		if(it->second.get_stato()==1){
+			return 1;
+		}
+	}
 	else return 0;
 }
 /**
@@ -63,7 +73,8 @@ void Magazzino::togli_fornitore(char* _denominazione){
 	map<char*, Fornitore>::iterator it;
 	it = forn.find(_denominazione);
 	if(it!=forn.end()){
-		forn.erase(it);
+		//forn.erase(it);
+		it->second.disattiva_stato();
 		cout<<"Rimosso fornitore";
 	}
 	else cout<<"Fornitore non trovato";
@@ -72,7 +83,11 @@ void Magazzino::togli_fornitore(char* _denominazione){
 void Magazzino::lista_fornitori(){
 	map<char*, Fornitore>::iterator it;
 	for(it = forn.begin(); it != forn.end(); ++it){
-		cout<<it->second<<endl;
+		cout<<it->second;
+		if(it->second.get_stato()==0){
+			cout<<" DISATTIVATO";
+		}
+		cout<<endl;
 	}
 }
 
@@ -80,8 +95,12 @@ void Magazzino::add_servizio_fornitore(char* _denominazione, char* _nome, int du
 	map<char*, Fornitore>::iterator it;
 	it=forn.find(_denominazione);
 	if(it!=forn.end()){
+		if(it->second.get_stato()==1){
 		cout<<"Servizio aggiunto a fornitore "<<_denominazione<<endl;
 		it->second.aggiungi_servizio(_nome, durata, franchigia, costo);
+		}else{
+			cout<<"Fornitore disattivato"<<endl;			
+		}
 	}
 	else cout<<"Fornitore non trovato"<<endl;
 }
@@ -90,7 +109,11 @@ Servizio* Magazzino::trova_servizio(char* _denominazione, char* _nome){
    map<char*, Fornitore>::iterator it;
 	it=forn.find(_denominazione);
 	if(it!=forn.end()){
+		if(it->second.get_stato()==1){
 		return it->second.get_servizio(_nome);
+		}else{
+			cout<<"Servizio associato a fornitore disattivato";
+	}
    }else{
    	cout<<"Servizio associato a fornitore non trovato";
    	return NULL;
@@ -117,7 +140,7 @@ void Magazzino::aggiungi_fattura(int _totale, bool _vendita){
 * numero fattura resta pero' sempre dedicato alla fattura 
 * eliminata quindi non puo' essere assunto da altre fatture.
 */
-void Magazzino::togli_fattura(int _numero){
+/*void Magazzino::togli_fattura(int _numero){
 	map<int,Fattura>::iterator iter;
 	iter = fat.find(_numero);
 	if(iter!=fat.end()){
@@ -126,7 +149,7 @@ void Magazzino::togli_fattura(int _numero){
 	}else{
 		cout<<"Fattura non trovata!"<<endl;
 	}
-}
+}*/
 
 /**
 * \brief Funzione per stampare l'elenco dei dipendenti.
@@ -150,7 +173,11 @@ void Magazzino::aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int 
 void Magazzino::lista_metodo_di_pagamento(){
 	vector<MetodoDiPagamento>::iterator iter;
 	for(iter = met.begin(); iter != met.end(); ++iter)	{
-		cout<<*iter<<endl;
+		cout<<*iter;
+		if(iter->get_stato()==0){
+			cout<<" DISATTIVATO";
+		}
+		cout<<endl;
 	}
 }
 
@@ -158,8 +185,13 @@ MetodoDiPagamento* Magazzino::trova_metodo_di_pagamento(char* nome){
 	vector<MetodoDiPagamento>::iterator iter;
 	for(iter = met.begin(); iter != met.end(); ++iter)	{
 		if(iter->get_nome() == nome){
+			if(iter->get_stato()==1){
 			cout<<"Metodo trovato"<<endl;
 			return &*iter;
+			}else{
+				cout<<"Metodo disattivato"<<endl;
+				return NULL;
+			}
 		}
 		else{
 			cout<<"Metodo non trovato"<<endl;
@@ -175,7 +207,9 @@ void Magazzino::aggiungi_privato(char* _nome,char* _cognome,char* _telefono, cha
 	Privato p(_nome, _cognome, _telefono, _codiceFiscale, _sconto);
 	if(pri.find(_codiceFiscale)==pri.end()){
 		pri.insert(pair<char*, Privato> (_codiceFiscale, p));
-		cout<<"Inserito privato "<<p<<endl;
+		cout<<"Inserito privato ";
+		p.stampa();
+		cout<<endl;
 	} else cout<<"Privato gia' inserito"<<endl;
 	
 }
@@ -191,7 +225,8 @@ void Magazzino::togli_privato(char* _codiceFiscale){
 	iter = pri.find(_codiceFiscale);
 	if(iter != pri.end()){
 		cout<<"Rimosso privato "<<_codiceFiscale<<endl;
-		pri.erase(iter);
+		iter->second.disattiva_stato();
+		//pri.erase(iter);
 	}
 	else{
 		cout<<"Privato non trovato!"<<endl;
@@ -205,15 +240,25 @@ void Magazzino::togli_privato(char* _codiceFiscale){
 void Magazzino::lista_privato(){
 	map <char*, Privato>::iterator iter;
 	for(iter = pri.begin(); iter !=pri.end(); ++iter){
-		cout<<iter->second<<endl;
+		iter->second.stampa();
+		if(iter->second.get_stato()==0){
+			cout<<" DISATTIVATO";	
+		}
+		cout<<endl;
 	}
 }
 
 Privato* Magazzino::trova_privato(char* _cf){
 	map<char*, Privato>::iterator it;
 	it = pri.find(_cf);
-	if(it!=pri.end()) return &it->second;
-	else{
+	if(it!=pri.end()){
+		if(it->second.get_stato()==1){
+		return &it->second;
+		}else{
+			cout<<"Privato disattivato!"<<endl;
+			return NULL;
+		}
+	}else{
 		cout<<"Privato non trovato!"<<endl;
 		return NULL;
 	} 
@@ -225,7 +270,9 @@ void Magazzino::aggiungi_impresa(char* _nome,char* _telefono, char* _piva, int _
 	Impresa i(_nome, _telefono, _piva, _sconto);
 	if(imp.find(_piva) == imp.end()){
 		imp.insert(pair<char*, Impresa> (_piva, i));
-		cout<<"Inserita impresa "<<i<<endl;
+		cout<<"Inserita impresa ";
+		i.stampa();
+		cout<<endl;
 	} else cout<<"Impresa gia' inserita"<<endl;
 }
 
@@ -240,7 +287,8 @@ void Magazzino::togli_impresa(char* _piva){
 	iter = imp.find(_piva);
 	if(iter != imp.end()){
 		cout<<"Rimossa impresa "<<_piva<<endl;
-		imp.erase(iter);
+		iter->second.disattiva_stato();
+		//imp.erase(iter);
 	}
 	else{
 		cout<<"Impresa non trovata!"<<endl;
@@ -253,7 +301,11 @@ void Magazzino::togli_impresa(char* _piva){
 void Magazzino::lista_impresa(){
 	map <char*, Impresa>::iterator iter;
 	for(iter = imp.begin(); iter !=imp.end(); ++iter){
-		cout<<iter->second<<endl;
+		iter->second.stampa();
+		if(iter->second.get_stato()==0){
+			cout<<" DISATTIVA";
+		}
+		cout<<endl;
 	}
 }
 
@@ -261,7 +313,12 @@ Impresa* Magazzino::trova_impresa(char* _piva){
 	map <char*, Impresa>::iterator it;
 	it = imp.find(_piva);
 	if(it != imp.end()){
-		return &it->second;
+		if(it->second.get_stato()==1){
+			return &it->second;
+		}else{
+			cout<<"Impresa disattivata"<<endl;
+			return NULL;	
+		}
 	}else{
 		cout<<"Impresa non trovata"<<endl;
 		return NULL;
@@ -283,7 +340,11 @@ void Magazzino::aggiungi_prodotto(int _quantita, char *_colore, char *_marca, in
 void Magazzino::lista_prodotto(){
 	map<int, Prodotto>::iterator iter;
 	for(iter = pro.begin(); iter!=pro.end();++iter){
-		cout<<iter->second<<endl;
+		cout<<iter->second;
+		if(iter->second.get_stato()==0){
+			cout<<" DISATTIVATO";
+		}
+		cout<<endl;
 	}
 }
 
@@ -295,7 +356,8 @@ void Magazzino::togli_prodotto(int _barcode){
 	iter = pro.find(_barcode);
 	if(iter !=pro.end()){
 		cout<<"Eliminato prodotto "<<_barcode<<endl;
-		pro.erase(iter);
+		//pro.erase(iter);
+		iter->second.disattiva_stato();
 	}
 	else cout<<"Errore, prodotto non trovato."<<endl;
 }
@@ -309,8 +371,14 @@ void Magazzino::togli_prodotto(int _barcode){
 Prodotto* Magazzino::find_prodotto(int _barcode){
 	map<int, Prodotto>::iterator iter;
 	iter = pro.find(_barcode);
-	if(iter != pro.end()) return &iter->second;
-	else {
+	if(iter != pro.end()){
+		if(iter->second.get_stato()==1){
+			return &iter->second;
+		}else{
+			cout<<"Errore, prodotto disattivato"<<endl;
+		return NULL;
+		}
+	}else {
 		cout<<"Errore, prodotto non trovato"<<endl;
 		return NULL;
 	}
@@ -383,8 +451,8 @@ void test(){
 	m.aggiungi_fattura(232,0);
 	m.aggiungi_fattura(2332,0);
 	m.lista_fattura(); //stampo le fattura
-	m.togli_fattura(5); //provo a rimuovere fattura non esistente
-	m.togli_fattura(1); //rimuovo fattura esistente NOTA: anche se la fattura viene eliminata, il numero rimane dedicato e non è possibile riusarlo
+	//m.togli_fattura(5); //provo a rimuovere fattura non esistente
+	//m.togli_fattura(1); //rimuovo fattura esistente NOTA: anche se la fattura viene eliminata, il numero rimane dedicato e non è possibile riusarlo
 	m.aggiungi_fattura(33333,1); //questa fattura quindi avrà numero 4, e la fattura 1 non verrà stampata.
 	m.lista_fattura(); //stampo di nuovo per verificare l'eliminazione
 	cout<<"==== FINE TEST FATTURA ===="<<endl<<endl;
@@ -403,7 +471,8 @@ void test(){
 	m.togli_privato("AAAAAAA"); //privato non esistente, dovrebbe dare errore
 	m.togli_privato("QWERTY123");
 	m.lista_privato();
-	cout<<*m.trova_privato("ABCDEFG1234")<<endl; //test ricerca privato
+	m.trova_privato("ABCDEFG1234")->stampa();
+	cout<<endl; //test ricerca privato
 	cout<<"==== FINE TEST PRIVATO ===="<<endl<<endl;
 	
 	cout<<"==== TEST IMPRESA ===="<<endl;
@@ -415,7 +484,7 @@ void test(){
 	m.togli_impresa("1231231"); //impresa inesistente
 	m.togli_impresa("9876543210");
 	m.lista_impresa();
-	cout<<*m.trova_impresa("0123456789")<<endl;
+	m.trova_impresa("0123456789")->stampa();
 	//m.togli_impresa("0123456789");
 	m.lista_impresa(); 
 	cout<<"==== FINE TEST IMPRESA ===="<<endl<<endl;
@@ -440,9 +509,6 @@ void test(){
 	
 	cout<<"==== TEST ORDINE VENDITA ===="<<endl; //questa parte � tutta da rivedere e anche i metodi collegati di ricerca 
 	OrdineVendita o("Brombeis",123456);
-	//o.add_privato(m.trova_privato("1234")); //VORREI FARE COSI' ma non posso.
-	Consumatore c("Andre","123",10);
-	o.add_consumatore(c);
 	o.add_prodotto(*m.find_prodotto(0)); //ricerco tramite barcode
    o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
    o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));

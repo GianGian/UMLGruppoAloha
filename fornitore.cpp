@@ -32,12 +32,12 @@ Ridefinizione operatore << per permettere la chiamata tramite cout<<Fornitore
 */
 ostream& operator << (ostream & os, const Fornitore &f){
 	os<<"Fornitore con denominazione: "<<f.denominazione<<" e prodotti venduti: "<<f.prodottiVenduti<<" servizi associati: ";
-	map<char*,Servizio>::const_iterator iter;
+	map<char*,Servizio*>::const_iterator iter;
 	if(f.ser.empty()){
 		os<<" nessun servizio associato.";
 	}else{
 	for(iter=f.ser.begin();iter!=f.ser.end();++iter){
-		 os<<"["<<(iter->second)<<"] ";
+		 os<<"["<<(*iter->second)<<"] ";
 	}
 }
 	os<<endl;
@@ -45,11 +45,11 @@ ostream& operator << (ostream & os, const Fornitore &f){
 }
 
 void Fornitore::aggiungi_servizio(char* _nome, int _durata, int _franchigia, int _costoServizio){
-	  ser.insert(pair<char*, Servizio> (_nome,Servizio(_nome, _durata, _franchigia, _costoServizio)));
+	  ser.insert(pair<char*, Servizio*> (_nome, new Servizio(_nome, _durata, _franchigia, _costoServizio)));
 }
 
 void Fornitore::togli_servizio(char* _nome){
-	map<char*, Servizio>::iterator iter;
+	map<char*, Servizio*>::iterator iter;
 	iter = ser.find(_nome);
 	if(iter != ser.end()){
 		ser.erase(iter);
@@ -60,19 +60,26 @@ void Fornitore::togli_servizio(char* _nome){
 }
 
 Servizio* Fornitore::get_servizio(char* _nome) {
-	map <char*,Servizio>::iterator iter;
+	map <char*,Servizio*>::iterator iter;
 	iter = ser.find(_nome);
 	if(iter!=ser.end()){
-		return &iter->second;
+		return iter->second;
 	}
 	return NULL;
 }
 
 void Fornitore::lista_servizio(){
-	map<char*,Servizio>::iterator iter;
+	map<char*,Servizio*>::iterator iter;
 	for(iter=ser.begin();iter!=ser.end();++iter){
 		if(&iter->second == NULL){
 			cout<<" nessun servizio associato."<<endl;
 		}else cout<<iter->second;
+	}
+}
+
+Fornitore::~Fornitore(){
+	 map<char*, Servizio*>:: iterator iter;
+		for(iter=ser.begin();iter!=ser.end();++iter){
+			delete(iter->second);
 	}
 }

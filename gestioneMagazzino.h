@@ -48,7 +48,7 @@ public:
 	Servizio*  trova_servizio(char* _denominazione, char* _nome);
 	
 	void aggiungi_fattura(int _totale, bool _vendita);
-	void togli_fattura(int _numero);
+	//void togli_fattura(int _numero);
 	void lista_fattura();
 	
 	void aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int _massimale);
