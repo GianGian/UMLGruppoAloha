@@ -42,10 +42,10 @@ int Prodotto::getPrezzo(int data){
 	cout<<"Prezzo non trovato"<<endl;
 	return -1; ///<Ritorno -1 che non è plausibile, quindi so che il prezzo non esiste.
 }
-ostream & operator<<(ostream &os, Prodotto &p){
-	map<Data,int>::iterator it;
+ostream & operator<<(ostream &os, const Prodotto &p){
+	map<Data,int>::const_iterator it;
 	os<<p.marca<<" "<<p.tipologia<< " "<<p.colore<< " QUANTITA': "<< p.quantita <<" BARCODE: "<<p.barcode<< " PREZZO: ";
-	for(it=p.prezzo.begin(); it!=p.prezzo.end(); it++){
+	for(it=p.prezzo.begin();it!=p.prezzo.end(); it++){
 		os<<it->second<<" ["<<it->first.data<<"] ";
 	}
 	return os;

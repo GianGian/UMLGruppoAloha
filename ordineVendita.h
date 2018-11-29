@@ -23,9 +23,9 @@ public:
 	void add_prodotto(Prodotto p);
 	void add_servizio(Servizio &_s);
 	void add_consumatore(Consumatore &_c);
-	void add_metodo_di_pagamento( MetodoDiPagamento &p);
-	friend ostream& operator<< (ostream& os, OrdineVendita &o);
+	void add_metodo_di_pagamento(MetodoDiPagamento *p);
+	friend ostream& operator<< (ostream& os, const OrdineVendita &o);
 };
 
-ostream& operator<< (ostream& os, OrdineVendita &o);
+ostream& operator<< (ostream& os, const OrdineVendita &o);
 #endif

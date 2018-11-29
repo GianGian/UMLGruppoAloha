@@ -53,80 +53,51 @@ bool Magazzino::trova_dipendente(int matricola){
 * \arg _telefono: corrisponde al numero di telefono
 * \arg _denominazione: corrisponde al nome della ditta a cui il fornitore fa riferimento. CONSIDERATO UNIVOCO.
 * \arg _prodottiVenduti: corrisponde ad una breve descrizione dei prodotti venduti. 
-* 
+* \todo aggiungere verifica fornitore gia' inserito
 */
-
 void Magazzino::aggiungi_fornitore(char* _nome,char*_telefono,char* _denominazione,char* _prodottiVenduti){
-	set <Fornitore>::iterator it;
-	it=forn.find(Fornitore (_nome, _telefono, _denominazione, _prodottiVenduti));
-	if (it!=forn.end()){
-		cout<<"Fornitore "<<_denominazione<<" gia' inserito"<<endl;
-	}else{
-		forn.insert(Fornitore(_nome, _telefono, _denominazione, _prodottiVenduti));
-		cout<<"Aggiunto Fornitore "<<_denominazione<<endl;
-	}
+	forn.insert(pair<char*,Fornitore> (_denominazione, Fornitore(_nome, _telefono, _denominazione, _prodottiVenduti)));
 }
 
-/**
-* \brief Funzione per togliere un fornitore.
-*
-*/
-void Magazzino::togli_fornitore(char* denominazione){
-	/*
-	set <Fornitore>::const_iterator deliter;
-	//Fornitore f(_nome, _telefono, _denominazione, _prodottiVenduti);
-	//deliter=find(forn.begin(), forn.end(), Fornitore (_nome, _telefono, _denominazione, _prodottiVenduti));
-	deliter=forn.find(f);
-	if (deliter!=forn.end()){
-		forn.erase(deliter);
-		cout<<"Eliminato fornitore: "<<_denominazione<<endl;
-	}else{
-		cout<<"Fornitore "<<_denominazione<<" non trovato"<<endl;
-	}
-	*/
-	set<Fornitore>::iterator it;
-	it = trova_fornitore(denominazione);
+void Magazzino::togli_fornitore(char* _denominazione){
+	map<char*, Fornitore>::iterator it;
+	it = forn.find(_denominazione);
 	if(it!=forn.end()){
-		cout<<"Tolto "<<*it;
 		forn.erase(it);
-	}else cout<<"Fornitore non trovato"<<endl;
-}
-
-set<Fornitore>::iterator Magazzino::trova_fornitore(char* nome){
-	set<Fornitore>::iterator iter;
-	for(iter = forn.begin(); iter!=forn.end(); iter++){
-		if(iter->get_denominazione()== nome) return iter;
+		cout<<"Rimosso fornitore";
 	}
-	return forn.end();
+	else cout<<"Fornitore non trovato";
 }
 
-/**
-* \brief Funzione per stampare la lista dei fornitori.
-*/
 void Magazzino::lista_fornitori(){
-	
-	set <Fornitore>:: iterator iter;
-	for(iter=forn.begin(); iter!=forn.end();++iter){
-		cout<<*iter;
+	map<char*, Fornitore>::iterator it;
+	for(it = forn.begin(); it != forn.end(); ++it){
+		cout<<it->second<<endl;
 	}
-	
 }
 
 void Magazzino::add_servizio_fornitore(char* _denominazione, char* _nome, int durata, int franchigia, int costo){
-	set<Fornitore>::iterator it;
-	it = trova_fornitore(_denominazione);
-	if(it != forn.end()){
-		Fornitore f = *it;
-		forn.erase(it);
-		f.aggiungi_servizio(_nome, durata, franchigia, costo);
-		forn.insert(f);
+	map<char*, Fornitore>::iterator it;
+	it=forn.find(_denominazione);
+	if(it!=forn.end()){
+		cout<<"Servizio aggiunto a fornitore "<<_denominazione<<endl;
+		it->second.aggiungi_servizio(_nome, durata, franchigia, costo);
 	}
-		
+	else cout<<"Fornitore non trovato"<<endl;
 }
 
-Servizio Magazzino::trova_servizio(char* _denominazione, char* _nome){
-	return *((*trova_fornitore(_denominazione)).get_servizio(_nome));
+Servizio* Magazzino::trova_servizio(char* _denominazione, char* _nome){
+   map<char*, Fornitore>::iterator it;
+	it=forn.find(_denominazione);
+	if(it!=forn.end()){
+		return it->second.get_servizio(_nome);
+   }else{
+   	cout<<"Servizio associato a fornitore non trovato";
+   	return NULL;
+	}  
 }
+
+
 /**
 * \brief Funzione per aggiungere una fattura.
 *
@@ -171,35 +142,30 @@ void Magazzino::lista_fattura(){
 /**
 * \brief Funzione per inserire nella lista dei metodi di pagamento un nuovo metodo
 */
-void Magazzino:: aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int _massimale){
-	MetodoDiPagamento m(_tipo, _massimale, _commissione);
-   if(met.find(m)==met.end()){
-       met.insert(m);
-	    cout<<"Creato metodo di pagamento "<< _tipo<<endl;
-	}
-	else cout<<"Metodo gia' trovato"<<endl;
-	
+void Magazzino::aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int _massimale){
+	met.push_back(MetodoDiPagamento(_tipo,_massimale,_commissione));
+	cout<<"Aggiunto metodo di pagamento "<<_tipo<<endl; 
 }
 
-/**
-* \brief Funzione per visualizzare tutti i metodi di pagamento disponibili
-*/
 void Magazzino::lista_metodo_di_pagamento(){
-	set<MetodoDiPagamento>::iterator iter;
-	for(iter = met.begin(); iter!=met.end();++iter){
-		cout<<(*iter)<<endl;
+	vector<MetodoDiPagamento>::iterator iter;
+	for(iter = met.begin(); iter != met.end(); ++iter)	{
+		cout<<*iter<<endl;
 	}
 }
 
-/**
-* \brief Funzione per cercare un metodo di pagamento dato il nome
-*/
-set<MetodoDiPagamento>::iterator Magazzino::trova_metodo_di_pagamento(char* nome) const{
-	set<MetodoDiPagamento>::iterator it;
-	for(it= met.begin();it!=met.end(); ++it){
-		if(it->get_nome() == nome) return it;
+MetodoDiPagamento* Magazzino::trova_metodo_di_pagamento(char* nome){
+	vector<MetodoDiPagamento>::iterator iter;
+	for(iter = met.begin(); iter != met.end(); ++iter)	{
+		if(iter->get_nome() == nome){
+			cout<<"Metodo trovato"<<endl;
+			return &*iter;
+		}
+		else{
+			cout<<"Metodo non trovato"<<endl;
+			return NULL;
+		}
 	}
-	return met.end();
 }
 
 /**
@@ -407,9 +373,7 @@ void test(){
 	m.togli_fornitore("Unitn");//se provo a metterne uno finto (basta togliere una lettera si impalla
 	m.togli_fornitore("Lenovo");
 	m.togli_fornitore("Lenono");
-	Fornitore f(*m.trova_fornitore("Samsung"));
 	m.add_servizio_fornitore("Samsung", "Kasko",1,10,100);
-	cout<<(f);
 	m.lista_fornitori();
 	cout<<"==== FINE TEST FORNITORI ===="<<endl<<endl;
 	
@@ -426,9 +390,9 @@ void test(){
 	cout<<"==== FINE TEST FATTURA ===="<<endl<<endl;
 	
 	cout<<"==== TEST METODO DI PAGAMENTO ===="<<endl;
-	m.aggiungi_metodo_di_pagamento("Banconote", 100, 500);
+	m.aggiungi_metodo_di_pagamento("Banconota", 100, 500);
 	m.aggiungi_metodo_di_pagamento("Assegno", 200, 1000);
-	cout<<*m.trova_metodo_di_pagamento("Banconote")<<endl;
+	cout<<*m.trova_metodo_di_pagamento("Banconota")<<endl;
 	m.lista_metodo_di_pagamento();
 	cout<<"==== FINE TEST METODO DI PAGAMENTO ===="<<endl<<endl;
 	
@@ -443,6 +407,7 @@ void test(){
 	cout<<"==== FINE TEST PRIVATO ===="<<endl<<endl;
 	
 	cout<<"==== TEST IMPRESA ===="<<endl;
+	m.lista_impresa();
 	m.aggiungi_impresa("SMA", "123456789", "0123456789", 10);
 	m.aggiungi_impresa("ASM", "987654321", "9876543210", 20);
 	m.aggiungi_impresa("ASM", "987654321", "9876543210", 20);
@@ -451,8 +416,8 @@ void test(){
 	m.togli_impresa("9876543210");
 	m.lista_impresa();
 	cout<<*m.trova_impresa("0123456789")<<endl;
-	m.togli_impresa("0123456789");
-	m.lista_impresa(); //cosa succede se tolgo tutte le imprese?
+	//m.togli_impresa("0123456789");
+	m.lista_impresa(); 
 	cout<<"==== FINE TEST IMPRESA ===="<<endl<<endl;
 	
 	cout<<"==== TEST PRODOTTO ===="<<endl;
@@ -479,11 +444,11 @@ void test(){
 	Consumatore c("Andre","123",10);
 	o.add_consumatore(c);
 	o.add_prodotto(*m.find_prodotto(0)); //ricerco tramite barcode
-	MetodoDiPagamento mp(*m.trova_metodo_di_pagamento("Banconote"));
-	o.add_metodo_di_pagamento(mp);
-	Servizio serviz(m.trova_servizio("Samsung","Kasko")); //NON VA BENE!!!
-	o.add_servizio(serviz);
+   o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
+   o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
+   o.add_consumatore(*m.trova_impresa("0123456789"));
 	cout<<o;	
+	
 }
 
 

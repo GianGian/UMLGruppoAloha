@@ -15,7 +15,7 @@
 #include <algorithm>
 #include <map>
 #include <list>
-#include <set>
+#include <vector>
 using namespace std;
 
 
@@ -32,8 +32,8 @@ private:
     map <int, Prodotto> pro;
     map <int, OrdineVendita> oven;
     map <int, OrdineAcquisto> oacq;
-    set <Fornitore> forn;
-    set <MetodoDiPagamento> met;
+    map <char*, Fornitore> forn;
+    vector <MetodoDiPagamento> met;
    
 public:
 	void aggiungi_dipendente(char* _nome, char* _telefono,char* _ruolo, int _matricola);
@@ -45,8 +45,7 @@ public:
 	void togli_fornitore(char* _denominazione);
 	void lista_fornitori();
 	void add_servizio_fornitore(char* _denominazione, char* _nome, int durata, int franchigia, int costo);
-	Servizio  trova_servizio(char* _denominazione, char* _nome);
-	set<Fornitore>::iterator trova_fornitore(char* denominazione);
+	Servizio*  trova_servizio(char* _denominazione, char* _nome);
 	
 	void aggiungi_fattura(int _totale, bool _vendita);
 	void togli_fattura(int _numero);
@@ -54,7 +53,7 @@ public:
 	
 	void aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int _massimale);
 	void lista_metodo_di_pagamento();
-	set<MetodoDiPagamento>::iterator trova_metodo_di_pagamento(char* nome) const;
+	MetodoDiPagamento* trova_metodo_di_pagamento(char* nome);
 	
 	void aggiungi_privato(char* _nome,char* _cognome,char* _telefono, char* _codiceFiscale, int _sconto);
 	void togli_privato(char* _codiceFiscale);

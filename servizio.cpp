@@ -21,5 +21,5 @@ bool Servizio::operator<(const Servizio &s)const{
 	return (s.nome<nome);
 }
 ostream& operator << (ostream& os, const Servizio& s){
-	os<<s.nome<<" Durata "<<s.durata<<" Franchigia"<<s.franchigia<<" Costo Servizio "<<s.costoServizio<<endl;
+	os<<s.nome<<" Durata "<<s.durata<<" Franchigia"<<s.franchigia<<" Costo Servizio "<<s.costoServizio;
 }

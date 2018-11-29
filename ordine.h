@@ -15,6 +15,6 @@ private:
 	Fattura *fattura;
 public:
 	Ordine(int _matricola);
-	void add_fattura(Fattura& f);
+	void add_fattura(Fattura* f);
 };
 #endif

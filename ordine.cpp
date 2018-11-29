@@ -12,6 +12,6 @@ Ordine::Ordine(int _matricola){
 	last_n_ordine++;
 }
 
-void Ordine::add_fattura(Fattura& f){
-	fattura = &f;
+void Ordine::add_fattura(Fattura* f){
+	fattura = f;
 }
