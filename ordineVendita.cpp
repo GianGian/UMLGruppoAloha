@@ -28,7 +28,9 @@ void OrdineVendita::add_metodo_di_pagamento(MetodoDiPagamento *p){
 
 
 ostream& operator<< (ostream& os, const OrdineVendita &o){
-	os<<"Ordine vendita di "<<*o.c<<" da consegnare in via: "<<o.via<<" con pagamento: "<<*o.pagamento;
+	os<<"Ordine vendita di ";
+	o.c->stampa();
+	os<<" da consegnare in via: "<<o.via<<" con pagamento: "<<*o.pagamento;
 	list<Prodotto>::const_iterator it;
 	os<<endl<<"Prodotti associati: ";
 	for(it=o.pro.begin(); it!=o.pro.end(); ++it){

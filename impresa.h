@@ -7,8 +7,6 @@ using namespace std;
 class Impresa: public Consumatore{
 private:
     char* piva;
-    //bool imp; //aggiunte silvia
-    //bool pri;
 
 public:
 	Impresa(char* _nome, char* _telefono, char* _piva, int _sconto);

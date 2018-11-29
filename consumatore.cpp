@@ -18,7 +18,7 @@ void Consumatore::putSconto(int s){
 ostream& operator<< (ostream &os, const Consumatore &c){
 	os<<c.get_nome()<<" "<<c.get_n_Telefono();
 }
-/*
-virtual void stampa const(){
+
+void Consumatore::stampa()const{
 	cout << "sconto:" << sconto << endl;
-}*/
+}

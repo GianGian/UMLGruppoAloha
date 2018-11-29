@@ -447,6 +447,7 @@ void test(){
    o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
    o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
    o.add_consumatore(*m.trova_impresa("0123456789"));
+   //o.add_consumatore(*m.trova_privato("ABCDEFG1234"));
 	cout<<o;	
 	
 }

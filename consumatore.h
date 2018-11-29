@@ -15,7 +15,7 @@ public:
 	friend ostream& operator<< (ostream &os, const Consumatore &c); //aggiunta solo per far funzionare le cose 
 	//da togliere quando abbiamo capito come va implementato ordinevendita
 	
-	//virtual void stampa const();
+	virtual void stampa()const;
 };	
 
 ostream& operator<< (ostream &os, const Consumatore &c);		
