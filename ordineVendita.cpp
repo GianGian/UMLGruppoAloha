@@ -39,9 +39,12 @@ int OrdineVendita::conferma_ordine(){
 		for(iter = prodotto.begin(); iter != prodotto.end(); ++iter){
 			totale+=(iter->second->getPrezzo(get_data())*iter->first);
 			iter->second->cambia_quantita(-iter->first);
+			if(s!=NULL){
+			totale+=(s->get_costo() * iter->first);
+			}	
 		}
 		totale+=pagamento->get_commissione();
-		totale+=s->get_costo();
+		
 		totale-=(totale*(c->getSconto()))/100;
 		return totale;
 	}

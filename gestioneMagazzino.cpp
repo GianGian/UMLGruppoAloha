@@ -585,7 +585,7 @@ void test(){
 	OrdineVendita o("Brombeis",123456,181130);
 	o.add_prodotto(5,m.find_prodotto(0)); //ricerco tramite barcode
    	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
-  	o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
+  	//o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
    	o.add_consumatore(*m.trova_impresa("0123456789"));
    	o.add_fattura(m.aggiungi_fattura(o.conferma_ordine(), 1, o.get_data()));
    	//m.lista_fattura();
