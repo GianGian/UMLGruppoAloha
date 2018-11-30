@@ -46,8 +46,9 @@ public:
 	void lista_fornitori();
 	void add_servizio_fornitore(char* _denominazione, char* _nome, int durata, int franchigia, int costo);
 	Servizio*  trova_servizio(char* _denominazione, char* _nome);
+	Fornitore* trova_fornitore(char* _denominazione);
 	
-	void aggiungi_fattura(int _totale, bool _vendita);
+	Fattura* aggiungi_fattura(int _totale, bool _vendita, int data);
 	//void togli_fattura(int _numero);
 	void lista_fattura();
 	
@@ -72,7 +73,7 @@ public:
 	void aggiungi_prezzo(int barcode, int prezzo, int data);
 	int trova_prezzo(int barcode, int data);
 	
-	//void crea_ordine_vendita(int barcode, int quantita, char* piva, )
+	//void crea_ordine_vendita(int matricola, int data, char* piva, char* cognome = 0);
 };
 void test();
 #endif

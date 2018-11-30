@@ -13,6 +13,7 @@ private:
     char* colore;
     char* marca;
     map <Data, int> prezzo;
+    map <Data, int> prezzo_acquisto;
     static int last_barcode; //<Usato per avere barcode univoci
     int barcode;
     char* tipologia;
@@ -22,6 +23,8 @@ Prodotto(int _quantita, char* _colore, char* _marca, int _costo, int _data, char
 int getBarcode();
 void addCosto(int _costo, int _data);
 int getPrezzo(int data);
+void addCosto_acquisto(int _costo, int _data);
+int getPrezzo_acquisto(int data);
 friend ostream & operator<<(ostream &os, const Prodotto &p);
 bool get_stato();
 void disattiva_stato();

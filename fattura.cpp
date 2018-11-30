@@ -10,7 +10,7 @@ int Fattura::last_n_Fattura=0;
 *
 */
 
-Fattura::Fattura(int _totale, bool _vendita){
+Fattura::Fattura(int _totale, bool _vendita, int data):d(data){
    last_n_Fattura++;
    n_Fattura = last_n_Fattura;
    totale = _totale;
@@ -30,6 +30,6 @@ ostream& operator<< (ostream &os, Fattura &f){
 	os<<"Fattura di ";
 	if(f.vendita == 1) os<<"vendita ";
 	else os<<"acquisto ";
-	os<<"n. "<<f.n_Fattura<<" totale: "<<f.totale;
+	os<<"n. "<<f.n_Fattura<<" totale: "<<f.totale<<" in data: "<<f.d;
 	return os;
 }

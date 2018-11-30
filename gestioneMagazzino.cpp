@@ -112,15 +112,28 @@ Servizio* Magazzino::trova_servizio(char* _denominazione, char* _nome){
 		if(it->second.get_stato()==1){
 		return it->second.get_servizio(_nome);
 		}else{
-			cout<<"Servizio associato a fornitore disattivato";
+			cout<<"Servizio associato a fornitore disattivato"<<endl;
 	}
    }else{
-   	cout<<"Servizio associato a fornitore non trovato";
+   	cout<<"Servizio associato a fornitore non trovato"<<endl;
    	return NULL;
 	}  
 }
 
-
+Fornitore* Magazzino::trova_fornitore(char* _denominazione){
+	map<char*, Fornitore>::iterator it;
+	it=forn.find(_denominazione);
+	if(it!=forn.end()){
+		if(it->second.get_stato()==1){
+			return &it->second;
+		}else{
+			cout<<"Fornitore disattivato!"<<endl;
+		}
+	}else{
+		cout<<"Fornitore non trovato"<<endl;
+		return NULL;
+	}
+}
 /**
 * \brief Funzione per aggiungere una fattura.
 *
@@ -128,10 +141,17 @@ Servizio* Magazzino::trova_servizio(char* _denominazione, char* _nome){
 *come ID univoco non modificabile in alcun modo dall'utente.
 * \arg _vendita: 1=fattura di vendita, 0= fattura di acquisto.
 */
-void Magazzino::aggiungi_fattura(int _totale, bool _vendita){
-	Fattura f(_totale, _vendita);
-	fat.insert(pair<int, Fattura> (f.get_n_Fattura(),f));	
-	cout<<"Inserita fattura: "<<f.get_n_Fattura()<<" totale: "<<_totale<<endl;
+Fattura* Magazzino::aggiungi_fattura(int _totale, bool _vendita, int data){
+	Fattura f(_totale, _vendita, data);
+	fat.insert(pair<int, Fattura> (f.get_n_Fattura(),f));
+	map<int, Fattura>::iterator it;
+	it = fat.find(f.get_n_Fattura());
+	if(it != fat.end()){
+		return &it->second;
+		cout<<"Inserita fattura: "<<f.get_n_Fattura()<<" totale: "<<_totale<<endl;
+	}
+	else return NULL;	
+	
 }
 
 /**
@@ -418,6 +438,30 @@ int Magazzino::trova_prezzo(int barcode, int data){
 	}	
 }
 
+/*
+void Magazzino::crea_ordine_vendita(int matricola, int data, char* piva, char* cognome = 0){
+	if(trova_dipendente(matricola)==1){
+		cout<<"Operazione autorizzata"<<endl;
+		OrdineVendita o;
+		if(cognome == 0){ //IMPRESA
+			if(trova_impresa(piva)!=NULL){ //impresa trovata
+				o.add_consumatore(trova_impresa(piva));
+			}else{
+				aggiungi_impresa()
+			}
+		}else{ //PRIVATO
+			if(trova_privato(piva)!=NULL){ //privato trovato. Attenzione, piva in questo caso e' CF
+				o.add_consumatore(trova_privato(piva))
+			}
+			
+		}
+	}
+	else{
+		cout<<"Impossibile completare l'operazione"<<endl;
+	}
+}
+*/
+
 void test(){
 	Magazzino m;
 	cout<<"==== TEST DIPENDENTE ===="<<endl;
@@ -447,13 +491,13 @@ void test(){
 	
 	cout<<"==== TEST FATTURA ===="<<endl;
 	//creo tre fatture
-	m.aggiungi_fattura(23,1); 
-	m.aggiungi_fattura(232,0);
-	m.aggiungi_fattura(2332,0);
+	m.aggiungi_fattura(23,1,181112); 
+	m.aggiungi_fattura(232,0,181112);
+	m.aggiungi_fattura(2332,0,181112);
 	m.lista_fattura(); //stampo le fattura
 	//m.togli_fattura(5); //provo a rimuovere fattura non esistente
 	//m.togli_fattura(1); //rimuovo fattura esistente NOTA: anche se la fattura viene eliminata, il numero rimane dedicato e non è possibile riusarlo
-	m.aggiungi_fattura(33333,1); //questa fattura quindi avrà numero 4, e la fattura 1 non verrà stampata.
+	m.aggiungi_fattura(33333,1,181112); //questa fattura quindi avrà numero 4, e la fattura 1 non verrà stampata.
 	m.lista_fattura(); //stampo di nuovo per verificare l'eliminazione
 	cout<<"==== FINE TEST FATTURA ===="<<endl<<endl;
 	
@@ -508,14 +552,24 @@ void test(){
 	cout<<"==== FINE TEST SERVIZIO ===="<<endl<<endl;
 	
 	cout<<"==== TEST ORDINE VENDITA ===="<<endl; //questa parte � tutta da rivedere e anche i metodi collegati di ricerca 
-	OrdineVendita o("Brombeis",123456);
-	o.add_prodotto(*m.find_prodotto(0)); //ricerco tramite barcode
-   o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
-   o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
-   o.add_consumatore(*m.trova_impresa("0123456789"));
+	OrdineVendita o("Brombeis",123456,181130);
+	o.add_prodotto(5,m.find_prodotto(0)); //ricerco tramite barcode
+   	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
+  	o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
+   	o.add_consumatore(*m.trova_impresa("0123456789"));
+   	
+   	o.add_fattura(m.aggiungi_fattura(100,1,o.get_data()));
+   	m.lista_fattura();
    //o.add_consumatore(*m.trova_privato("ABCDEFG1234"));
 	cout<<o;	
+	cout<<"==== FINE TEST ORDINE VENDITA ===="<<endl<<endl;
 	
+	cout<<"==== TEST ORDINE ACQUISTO ===="<<endl;
+	OrdineAcquisto a(123456, 181130, m.trova_fornitore("Samsung")); //nt matricola,int _d, Fornitore *_f
+	a.addProdotto(200, 10, m.find_prodotto(0));
+	cout<<a<<endl;
+	m.lista_prodotto();
+	cout<<"==== FINE TEST ORDINE ACQUISTO ===="<<endl<<endl;
 }
 
 

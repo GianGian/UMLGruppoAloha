@@ -5,7 +5,7 @@
 #include "ordine.h"
 #include "metodoDiPagamento.h"
 #include "servizio.h"
-#include "list"
+#include "map"
 #include "algorithm"
 #include "prodotto.h"
 #include "consumatore.h"
@@ -17,10 +17,10 @@ private:
     MetodoDiPagamento *pagamento;
     Servizio *s;
     Consumatore *c;
-    list<Prodotto> pro;
+    multimap<int,Prodotto*> pro;
 public:
-	OrdineVendita(char* _via, int matricola);
-	void add_prodotto(Prodotto p);
+	OrdineVendita(char* _via, int matricola, int data);
+	void add_prodotto(int q, Prodotto* p);
 	void add_servizio(Servizio &_s);
 	void add_consumatore(Consumatore &_c);
 	void add_metodo_di_pagamento(MetodoDiPagamento *p);

@@ -1,6 +1,7 @@
 #ifndef __FATTURA_H__
 #define __FATTURA_H__
 #include <iostream>
+#include "data.h"
 using namespace std;
 /**
 *Classe che descrive una fattura.
@@ -14,8 +15,9 @@ private:
 	int n_Fattura;
 	int totale;
 	bool vendita;
+	Data d;
 public:
-	Fattura(int _totale, bool _vendita);
+	Fattura(int _totale, bool _vendita, int data);
 	~Fattura();
 	int get_n_Fattura(); ///< Ritorna il numero di fattura associato all'istanza.
 	friend ostream& operator<< (ostream &os, Fattura &f);
