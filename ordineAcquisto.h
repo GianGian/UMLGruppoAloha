@@ -17,6 +17,7 @@ public:
 	OrdineAcquisto(int matricola,int _d, Fornitore *_f);
 	void addProdotto(int prezzo, int quantita, Prodotto *p);
 	friend ostream& operator<< (ostream& os, OrdineAcquisto &oa);
+	int conferma_ordine();
 };
 
 ostream& operator<< (ostream& os, OrdineAcquisto &oa);

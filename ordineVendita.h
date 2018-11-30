@@ -17,7 +17,7 @@ private:
     MetodoDiPagamento *pagamento;
     Servizio *s;
     Consumatore *c;
-    multimap<int,Prodotto*> pro;
+    multimap<int,Prodotto*> prodotto;
 public:
 	OrdineVendita(char* _via, int matricola, int data);
 	void add_prodotto(int q, Prodotto* p);
@@ -25,6 +25,7 @@ public:
 	void add_consumatore(Consumatore &_c);
 	void add_metodo_di_pagamento(MetodoDiPagamento *p);
 	friend ostream& operator<< (ostream& os, const OrdineVendita &o);
+	int conferma_ordine();
 };
 
 ostream& operator<< (ostream& os, const OrdineVendita &o);

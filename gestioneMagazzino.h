@@ -36,6 +36,7 @@ private:
     vector <MetodoDiPagamento> met;
    
 public:
+	Magazzino(char* _via, char* _denominazione, int _fondoCassa);
 	void aggiungi_dipendente(char* _nome, char* _telefono,char* _ruolo, int _matricola);
 	void togli_dipendente(int _matricola);
 	void lista_dipendenti();
@@ -73,7 +74,11 @@ public:
 	void aggiungi_prezzo(int barcode, int prezzo, int data);
 	int trova_prezzo(int barcode, int data);
 	
+	friend ostream& operator<< (ostream& os, Magazzino &m);
 	//void crea_ordine_vendita(int matricola, int data, char* piva, char* cognome = 0);
 };
+
+ostream& operator<< (ostream& os, Magazzino &m);
+
 void test();
 #endif

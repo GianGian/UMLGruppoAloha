@@ -20,5 +20,6 @@ public:
 	int get_matricola();
 	int get_n_ordine()const;
 	int get_data()const;
+	Fattura* get_fattura()const;
 };
 #endif

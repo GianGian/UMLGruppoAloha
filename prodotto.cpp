@@ -43,7 +43,9 @@ int Prodotto::getPrezzo(int data){
 	cout<<"Prezzo non trovato"<<endl;
 	return -1; ///<Ritorno -1 che non è plausibile, quindi so che il prezzo non esiste.
 }
-
+void Prodotto::cambia_quantita(int q){
+	quantita += q;
+}
 void Prodotto::addCosto_acquisto(int _costo, int _data){
 	if(prezzo.find(_data)==prezzo.end()){
 		prezzo.insert(pair<Data,int> (Data(_data), _costo));
@@ -52,6 +54,10 @@ void Prodotto::addCosto_acquisto(int _costo, int _data){
 	else{
 		cout<<"Prezzo per questa data gia' inserito!"<<endl;
 	}
+}
+
+int Prodotto::get_quantita(){
+	return quantita;
 }
 
 int Prodotto::getPrezzo_acquisto(int data){

@@ -25,6 +25,8 @@ void addCosto(int _costo, int _data);
 int getPrezzo(int data);
 void addCosto_acquisto(int _costo, int _data);
 int getPrezzo_acquisto(int data);
+void cambia_quantita(int q);
+int get_quantita();
 friend ostream & operator<<(ostream &os, const Prodotto &p);
 bool get_stato();
 void disattiva_stato();

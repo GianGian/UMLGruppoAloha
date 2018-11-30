@@ -11,10 +11,10 @@ int Fattura::last_n_Fattura=0;
 */
 
 Fattura::Fattura(int _totale, bool _vendita, int data):d(data){
-   last_n_Fattura++;
-   n_Fattura = last_n_Fattura;
-   totale = _totale;
-   vendita = _vendita;
+		last_n_Fattura++;
+		n_Fattura = last_n_Fattura;
+		totale = _totale;
+		vendita = _vendita;
    //cout<<"Creata fattura numero: "<<n_Fattura<< " totale "<<totale<<endl;
 }
 

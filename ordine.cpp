@@ -28,3 +28,7 @@ int Ordine::get_n_ordine()const{
 int Ordine::get_data()const{
 	return d.data;
 }
+
+Fattura* Ordine::get_fattura()const{
+	return fattura;
+}

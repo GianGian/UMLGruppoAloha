@@ -3,6 +3,12 @@
 #include "gestioneMagazzino.h"
 using namespace std;
 
+Magazzino::Magazzino(char* _via, char* _denominazione, int _fondoCassa){
+	via = _via;
+	denominazione = _denominazione;
+	fondoCassa = _fondoCassa;
+}
+
 /**
 * \brief Funzione per aggiungere un dipendente al magazzino
 */
@@ -142,15 +148,22 @@ Fornitore* Magazzino::trova_fornitore(char* _denominazione){
 * \arg _vendita: 1=fattura di vendita, 0= fattura di acquisto.
 */
 Fattura* Magazzino::aggiungi_fattura(int _totale, bool _vendita, int data){
-	Fattura f(_totale, _vendita, data);
-	fat.insert(pair<int, Fattura> (f.get_n_Fattura(),f));
-	map<int, Fattura>::iterator it;
-	it = fat.find(f.get_n_Fattura());
-	if(it != fat.end()){
-		return &it->second;
-		cout<<"Inserita fattura: "<<f.get_n_Fattura()<<" totale: "<<_totale<<endl;
+	if(_vendita == 1){
+		fondoCassa+=_totale;
+	}else{
+		fondoCassa-=_totale;
 	}
-	else return NULL;	
+	if(_totale > 0){
+		Fattura f(_totale, _vendita, data);
+		fat.insert(pair<int, Fattura> (f.get_n_Fattura(),f));
+		map<int, Fattura>::iterator it;
+		it = fat.find(f.get_n_Fattura());
+		if(it != fat.end()){
+			return &it->second;
+			cout<<"Inserita fattura: "<<f.get_n_Fattura()<<" totale: "<<_totale<<endl;
+		}
+	}
+else return NULL;	
 	
 }
 
@@ -206,7 +219,6 @@ MetodoDiPagamento* Magazzino::trova_metodo_di_pagamento(char* nome){
 	for(iter = met.begin(); iter != met.end(); ++iter)	{
 		if(iter->get_nome() == nome){
 			if(iter->get_stato()==1){
-			cout<<"Metodo trovato"<<endl;
 			return &*iter;
 			}else{
 				cout<<"Metodo disattivato"<<endl;
@@ -461,9 +473,13 @@ void Magazzino::crea_ordine_vendita(int matricola, int data, char* piva, char* c
 	}
 }
 */
-
+ostream& operator<< (ostream& os, Magazzino &m){
+	os<<"Magazzino "<<m.denominazione<<" in via "<<m.via<< " fondocassa: "<<m.fondoCassa;
+	return os;
+}
 void test(){
-	Magazzino m;
+	Magazzino m("Brombeis", "Mediaworld", 1000);
+	cout<<m<<endl;
 	cout<<"==== TEST DIPENDENTE ===="<<endl;
 	m.aggiungi_dipendente("Anna","345679","Direttore",123456);	
 	m.aggiungi_dipendente("Francesca","15678","Segretaria",1256);
@@ -488,7 +504,7 @@ void test(){
 	m.add_servizio_fornitore("Samsung", "Kasko",1,10,100);
 	m.lista_fornitori();
 	cout<<"==== FINE TEST FORNITORI ===="<<endl<<endl;
-	
+	/*
 	cout<<"==== TEST FATTURA ===="<<endl;
 	//creo tre fatture
 	m.aggiungi_fattura(23,1,181112); 
@@ -500,7 +516,7 @@ void test(){
 	m.aggiungi_fattura(33333,1,181112); //questa fattura quindi avrà numero 4, e la fattura 1 non verrà stampata.
 	m.lista_fattura(); //stampo di nuovo per verificare l'eliminazione
 	cout<<"==== FINE TEST FATTURA ===="<<endl<<endl;
-	
+	*/
 	cout<<"==== TEST METODO DI PAGAMENTO ===="<<endl;
 	m.aggiungi_metodo_di_pagamento("Banconota", 100, 500);
 	m.aggiungi_metodo_di_pagamento("Assegno", 200, 1000);
@@ -536,6 +552,7 @@ void test(){
 	cout<<"==== TEST PRODOTTO ===="<<endl;
 	m.aggiungi_prodotto(1, "rosso", "Lenovo", 500,181126,"PC");
 	m.aggiungi_prodotto(10, "blu", "Apple", 1000,181126, "PC") ;
+	m.aggiungi_prodotto(10, "rosa", "Asus", 1000,181126, "PC") ;
     m.aggiungi_prezzo(1, 100, 181129);
     cout<<m.trova_prezzo(1, 181125)<<endl;
     cout<<m.trova_prezzo(1, 181126)<<endl;
@@ -546,30 +563,37 @@ void test(){
 	m.togli_prodotto(1); //elimina apple
 	m.lista_prodotto();
 	cout<<*(m.find_prodotto(0))<<endl; 
+	m.aggiungi_prodotto(10, "blu", "Apple", 1000,181126, "PC") ;
 	cout<<"==== FINE TEST PRODOTTO ===="<<endl<<endl;
 	
 	cout<<"==== TEST SERVIZIO ===="<<endl;
 	cout<<"==== FINE TEST SERVIZIO ===="<<endl<<endl;
 	
-	cout<<"==== TEST ORDINE VENDITA ===="<<endl; //questa parte � tutta da rivedere e anche i metodi collegati di ricerca 
+
+	cout<<"==== TEST ORDINE ACQUISTO ===="<<endl;
+	OrdineAcquisto a(123456, 181130, m.trova_fornitore("Samsung")); //nt matricola,int _d, Fornitore *_f
+	a.addProdotto(200, 10, m.find_prodotto(0));
+	a.addProdotto(500, 5, m.find_prodotto(2));
+	cout<<a<<endl;
+	a.add_fattura(m.aggiungi_fattura(a.conferma_ordine(), 0, a.get_data()));
+	m.lista_fattura();
+	cout<<endl<<"prodotti dopo conferma ordine:"<<endl;
+	cout<<a<<endl;
+	cout<<"==== FINE TEST ORDINE ACQUISTO ===="<<endl<<endl;
+	
+		cout<<"==== TEST ORDINE VENDITA ===="<<endl; 
 	OrdineVendita o("Brombeis",123456,181130);
 	o.add_prodotto(5,m.find_prodotto(0)); //ricerco tramite barcode
    	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
   	o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
    	o.add_consumatore(*m.trova_impresa("0123456789"));
-   	
-   	o.add_fattura(m.aggiungi_fattura(100,1,o.get_data()));
-   	m.lista_fattura();
-   //o.add_consumatore(*m.trova_privato("ABCDEFG1234"));
-	cout<<o;	
+   	o.add_fattura(m.aggiungi_fattura(o.conferma_ordine(), 1, o.get_data()));
+   	//m.lista_fattura();
+	
+	cout<<o;
 	cout<<"==== FINE TEST ORDINE VENDITA ===="<<endl<<endl;
 	
-	cout<<"==== TEST ORDINE ACQUISTO ===="<<endl;
-	OrdineAcquisto a(123456, 181130, m.trova_fornitore("Samsung")); //nt matricola,int _d, Fornitore *_f
-	a.addProdotto(200, 10, m.find_prodotto(0));
-	cout<<a<<endl;
-	m.lista_prodotto();
-	cout<<"==== FINE TEST ORDINE ACQUISTO ===="<<endl<<endl;
+	cout<<m;
 }
 
 
