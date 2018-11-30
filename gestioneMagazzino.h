@@ -67,7 +67,7 @@ public:
 	void lista_impresa();
 	Impresa* trova_impresa(char* _piva);
 	
-	void aggiungi_prodotto(int _quantita, char *_colore, char *_marca, int _costo, int _data, char* _tipologia);
+	void aggiungi_prodotto(int _quantita, char *_colore, char *_marca, int _costo, int _data, char* _tipologia, bool servizio);
 	void lista_prodotto();
 	void togli_prodotto(int _barcode);
 	Prodotto* find_prodotto(int _barcode);

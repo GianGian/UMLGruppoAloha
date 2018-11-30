@@ -4,7 +4,7 @@
 using namespace std;
 int Prodotto:: last_barcode = 0;
 
-Prodotto::Prodotto(int _quantita, char* _colore, char* _marca, int _costo, int _data,char* _tipologia){
+Prodotto::Prodotto(int _quantita, char* _colore, char* _marca, int _costo, int _data,char* _tipologia, bool _servizio){
 	quantita = _quantita;
 	colore = _colore;
 	marca = _marca;
@@ -14,6 +14,7 @@ Prodotto::Prodotto(int _quantita, char* _colore, char* _marca, int _costo, int _
 	tipologia= _tipologia;
 	last_barcode++;
 	stato=1;
+	servizio = _servizio;
 }
 
 Prodotto::getBarcode(){
@@ -73,7 +74,9 @@ int Prodotto::getPrezzo_acquisto(int data){
 	cout<<"Prezzo non trovato"<<endl;
 	return -1; ///<Ritorno -1 che non è plausibile, quindi so che il prezzo non esiste.
 }
-
+bool Prodotto::get_servizio(){
+	return servizio;
+}
 ostream & operator<<(ostream &os, const Prodotto &p){
 	map<Data,int>::const_iterator it;
 	os<<p.marca<<" "<<p.tipologia<< " "<<p.colore<< " QUANTITA': "<< p.quantita <<" BARCODE: "<<p.barcode<< " PREZZO: ";

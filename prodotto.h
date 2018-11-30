@@ -18,8 +18,9 @@ private:
     int barcode;
     char* tipologia;
     bool stato;
+    bool servizio;
 public:
-Prodotto(int _quantita, char* _colore, char* _marca, int _costo, int _data, char* _tipologia);
+Prodotto(int _quantita, char* _colore, char* _marca, int _costo, int _data, char* _tipologia, bool _servizio);
 int getBarcode();
 void addCosto(int _costo, int _data);
 int getPrezzo(int data);
@@ -29,6 +30,7 @@ void cambia_quantita(int q);
 int get_quantita();
 friend ostream & operator<<(ostream &os, const Prodotto &p);
 bool get_stato();
+bool get_servizio();
 void disattiva_stato();
 };
 

@@ -360,8 +360,8 @@ Impresa* Magazzino::trova_impresa(char* _piva){
 /**
 * \brief Funzione per aggiungere prodotti in magazzino.
 */
-void Magazzino::aggiungi_prodotto(int _quantita, char *_colore, char *_marca, int _costo, int _data,char* _tipologia){
-	Prodotto p(_quantita, _colore, _marca, _costo, _data, _tipologia);
+void Magazzino::aggiungi_prodotto(int _quantita, char *_colore, char *_marca, int _costo, int _data,char* _tipologia, bool servizio){
+	Prodotto p(_quantita, _colore, _marca, _costo, _data, _tipologia, servizio);
 	pro.insert(pair<int, Prodotto>(p.getBarcode(), p));
 	cout<<"Inserito prodotto: "<<p<<endl;
 }
@@ -479,7 +479,7 @@ ostream& operator<< (ostream& os, Magazzino &m){
 }
 void test(){
 	Magazzino m("Brombeis", "Mediaworld", 1000);
-	cout<<m<<endl;
+	cout<<m<<endl<<endl;
 	cout<<"==== TEST DIPENDENTE ===="<<endl;
 	m.aggiungi_dipendente("Anna","345679","Direttore",123456);	
 	m.aggiungi_dipendente("Francesca","15678","Segretaria",1256);
@@ -501,7 +501,7 @@ void test(){
 	m.togli_fornitore("Unitn");//se provo a metterne uno finto (basta togliere una lettera si impalla
 	m.togli_fornitore("Lenovo");
 	m.togli_fornitore("Lenono");
-	m.add_servizio_fornitore("Samsung", "Kasko",1,10,100);
+	
 	m.lista_fornitori();
 	cout<<"==== FINE TEST FORNITORI ===="<<endl<<endl;
 	/*
@@ -550,30 +550,33 @@ void test(){
 	cout<<"==== FINE TEST IMPRESA ===="<<endl<<endl;
 	
 	cout<<"==== TEST PRODOTTO ===="<<endl;
-	m.aggiungi_prodotto(1, "rosso", "Lenovo", 500,181126,"PC");
-	m.aggiungi_prodotto(10, "blu", "Apple", 1000,181126, "PC") ;
-	m.aggiungi_prodotto(10, "rosa", "Asus", 1000,181126, "PC") ;
+	m.aggiungi_prodotto(1, "rosso", "Lenovo", 500,181126,"PC",1); //0
+	m.aggiungi_prodotto(10, "blu", "Apple", 1000,181126, "PC",1) ; //1
+	m.aggiungi_prodotto(10, "rosa", "Asus", 1000,181126, "PC",1) ; //2
+	m.aggiungi_prodotto(10, "trasparente", "Asus", 20,181126, "Vetro",0) ; //3
     m.aggiungi_prezzo(1, 100, 181129);
     cout<<m.trova_prezzo(1, 181125)<<endl;
     cout<<m.trova_prezzo(1, 181126)<<endl;
     cout<<m.trova_prezzo(1, 181201)<<endl;
 	//cout<<*(m.find_prodotto(1))<<endl;
 	m.lista_prodotto();
-	m.togli_prodotto(3); //non trova il prodotto
+	m.togli_prodotto(10); //non trova il prodotto
 	m.togli_prodotto(1); //elimina apple
 	m.lista_prodotto();
 	cout<<*(m.find_prodotto(0))<<endl; 
-	m.aggiungi_prodotto(10, "blu", "Apple", 1000,181126, "PC") ;
+	m.aggiungi_prodotto(10, "blu", "Apple", 1000,181126, "PC", 1) ;
 	cout<<"==== FINE TEST PRODOTTO ===="<<endl<<endl;
+	m.lista_prodotto();
 	
 	cout<<"==== TEST SERVIZIO ===="<<endl;
+	m.add_servizio_fornitore("Samsung", "Kasko",1,10,100);
 	cout<<"==== FINE TEST SERVIZIO ===="<<endl<<endl;
 	
 
 	cout<<"==== TEST ORDINE ACQUISTO ===="<<endl;
-	OrdineAcquisto a(123456, 181130, m.trova_fornitore("Samsung")); //nt matricola,int _d, Fornitore *_f
-	a.addProdotto(200, 10, m.find_prodotto(0));
-	a.addProdotto(500, 5, m.find_prodotto(2));
+	OrdineAcquisto a(123456, 181130, m.trova_fornitore("Samsung")); //matricola data fornitore
+	a.addProdotto(200, 20, m.find_prodotto(0)); //ordino 10 PC LENOVO a prezzo 200
+	a.addProdotto(300, 5, m.find_prodotto(2)); //ordino 5 PC ASUS a prezzo 300
 	cout<<a<<endl;
 	a.add_fattura(m.aggiungi_fattura(a.conferma_ordine(), 0, a.get_data()));
 	m.lista_fattura();
@@ -584,8 +587,11 @@ void test(){
 		cout<<"==== TEST ORDINE VENDITA ===="<<endl; 
 	OrdineVendita o("Brombeis",123456,181130);
 	o.add_prodotto(5,m.find_prodotto(0)); //ricerco tramite barcode
+	o.add_prodotto(20,m.find_prodotto(1)); //aggiungo prodotto disattivato
+	o.add_prodotto(20,m.find_prodotto(0)); //aggiungo un prodotto già inserito in quantita non disponibile, mi darà errore e non verrà inserito
+	o.add_prodotto(5,m.find_prodotto(3)); //ricerco tramite barcode il vetro (no servizio)
    	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
-  	//o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
+  	o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
    	o.add_consumatore(*m.trova_impresa("0123456789"));
    	o.add_fattura(m.aggiungi_fattura(o.conferma_ordine(), 1, o.get_data()));
    	//m.lista_fattura();
