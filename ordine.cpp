@@ -17,7 +17,7 @@ void Ordine::add_fattura(Fattura* f){
 	fattura = f;
 }
 
-int Ordine::get_matricola(){
+int Ordine::get_matricola()const{
 	return matricola;
 }
 

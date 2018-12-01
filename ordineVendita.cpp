@@ -83,7 +83,7 @@ ostream& operator<< (ostream& os, const OrdineVendita &o){
 	if(o.prodotto.empty()==1){
 		cout<<"Ordine vuoto"<<endl;
 	}else{
-	os<<"Ordine vendita n."<<o.get_n_ordine()<<" del "<<o.get_data()<<" di ";
+	os<<"Ordine vendita n."<<o.get_n_ordine()<<" del "<<o.get_data()<<" creato da: "<<o.get_matricola()<<" di ";
 	o.c->stampa();
 	os<<" da consegnare in via: "<<o.via<<" con pagamento: "<<*o.pagamento;
 	multimap<int,Prodotto*>::const_iterator it;
