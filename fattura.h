@@ -18,7 +18,6 @@ private:
 	Data d;
 public:
 	Fattura(int _totale, bool _vendita, int data);
-	~Fattura();
 	int get_n_Fattura(); ///< Ritorna il numero di fattura associato all'istanza.
 	friend ostream& operator<< (ostream &os, Fattura &f);
 };

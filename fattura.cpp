@@ -18,10 +18,6 @@ Fattura::Fattura(int _totale, bool _vendita, int data):d(data){
    //cout<<"Creata fattura numero: "<<n_Fattura<< " totale "<<totale<<endl;
 }
 
-Fattura::~Fattura(){
-	//cout<<"Distrutta fattura"<<endl;
-}
-
 int Fattura::get_n_Fattura(){
 	return n_Fattura;
 }

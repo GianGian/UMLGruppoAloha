@@ -10,6 +10,5 @@ Dipendente::Dipendente(char* _nome, char* _telefono,char* _ruolo, int _matricola
 
 ostream& operator<<(ostream& os,Dipendente& dip){
 	os<<"Dipendente "<<dip.get_nome()<<" con ruolo "<<dip.ruolo<<" e matricola "<<dip.matricola<<endl;
-	//os<<dip.matricola;
 	return os;
 }

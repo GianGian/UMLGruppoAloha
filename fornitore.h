@@ -17,7 +17,6 @@ private:
 
 public:
 	Fornitore(char* _nome,char* _telefono,char* _denominazione,char* _prodottiVenduti);
-	//bool operator <(const Fornitore& f) const;
 	friend ostream &operator << (ostream & os, const Fornitore &f);
 	void aggiungi_servizio(char* _nome, int _durata, int _franchigia, int _costoServizio);
 	void togli_servizio(char* _nome);

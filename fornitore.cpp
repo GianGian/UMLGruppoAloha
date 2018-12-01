@@ -9,24 +9,6 @@ Fornitore::Fornitore(char* _nome,char* _telefono,char* _denominazione,char* _pro
 	prodottiVenduti=_prodottiVenduti;
 }
 
-/*
-///Ridefinizione operatore == per peremettere la ricerca nella lista
-bool Fornitore::operator < (const Fornitore& f) const{
-	if (denominazione<f.denominazione){
-		return 1;
-	}
-	return 0;
-}
-
-char* Fornitore::get_denominazione()const{
-	return denominazione;
-}
-
-char* Fornitore::get_prodottiVenduti()const{
-	return prodottiVenduti;
-}
-*/
-
 /**
 Ridefinizione operatore << per permettere la chiamata tramite cout<<Fornitore
 */

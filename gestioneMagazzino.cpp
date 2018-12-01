@@ -28,7 +28,6 @@ void Magazzino::togli_dipendente(int _matricola){
 	map <int,Dipendente>::iterator it;
 	it=dip.find(_matricola);
 	if(it!=dip.end()){
-		//dip.erase(it);
 		it->second.disattiva_stato();
 		cout<<"Eliminato dipendente "<<_matricola<<endl;
 	}else{
@@ -168,23 +167,6 @@ else return NULL;
 }
 
 /**
-* \brief Funzione per togliere una fattura.
-* Toglie una fattura partendo dal suo numero univoco. Il campo
-* numero fattura resta pero' sempre dedicato alla fattura 
-* eliminata quindi non puo' essere assunto da altre fatture.
-*/
-/*void Magazzino::togli_fattura(int _numero){
-	map<int,Fattura>::iterator iter;
-	iter = fat.find(_numero);
-	if(iter!=fat.end()){
-		cout<<"Eliminata fattura numero: "<<_numero<<endl;
-		fat.erase(iter);
-	}else{
-		cout<<"Fattura non trovata!"<<endl;
-	}
-}*/
-
-/**
 * \brief Funzione per stampare l'elenco dei dipendenti.
 *
 */
@@ -216,19 +198,21 @@ void Magazzino::lista_metodo_di_pagamento(){
 
 MetodoDiPagamento* Magazzino::trova_metodo_di_pagamento(char* nome){
 	vector<MetodoDiPagamento>::iterator iter;
+	bool trovato = 0;
 	for(iter = met.begin(); iter != met.end(); ++iter)	{
 		if(iter->get_nome() == nome){
 			if(iter->get_stato()==1){
-			return &*iter;
+				trovato = 1;
+				return &*iter;
 			}else{
 				cout<<"Metodo disattivato"<<endl;
 				return NULL;
 			}
 		}
-		else{
-			cout<<"Metodo non trovato"<<endl;
-			return NULL;
-		}
+	}
+	if (trovato == 0){
+		cout<<"Metodo non trovato"<<endl;
+		return NULL;
 	}
 }
 
@@ -258,7 +242,6 @@ void Magazzino::togli_privato(char* _codiceFiscale){
 	if(iter != pri.end()){
 		cout<<"Rimosso privato "<<_codiceFiscale<<endl;
 		iter->second.disattiva_stato();
-		//pri.erase(iter);
 	}
 	else{
 		cout<<"Privato non trovato!"<<endl;
@@ -388,7 +371,6 @@ void Magazzino::togli_prodotto(int _barcode){
 	iter = pro.find(_barcode);
 	if(iter !=pro.end()){
 		cout<<"Eliminato prodotto "<<_barcode<<endl;
-		//pro.erase(iter);
 		iter->second.disattiva_stato();
 	}
 	else cout<<"Errore, prodotto non trovato."<<endl;
@@ -450,29 +432,31 @@ int Magazzino::trova_prezzo(int barcode, int data){
 	}	
 }
 
-/*
-void Magazzino::crea_ordine_vendita(int matricola, int data, char* piva, char* cognome = 0){
-	if(trova_dipendente(matricola)==1){
-		cout<<"Operazione autorizzata"<<endl;
-		OrdineVendita o;
-		if(cognome == 0){ //IMPRESA
-			if(trova_impresa(piva)!=NULL){ //impresa trovata
-				o.add_consumatore(trova_impresa(piva));
-			}else{
-				aggiungi_impresa()
-			}
-		}else{ //PRIVATO
-			if(trova_privato(piva)!=NULL){ //privato trovato. Attenzione, piva in questo caso e' CF
-				o.add_consumatore(trova_privato(piva))
-			}
-			
-		}
-	}
-	else{
-		cout<<"Impossibile completare l'operazione"<<endl;
-	}
+
+void Magazzino::crea_ordine_vendita(OrdineVendita o){
+	o.add_fattura(aggiungi_fattura(o.conferma_ordine(), 1, o.get_data()));
+	oven.insert(pair<int, OrdineVendita> (o.get_n_ordine(),o));
 }
-*/
+
+void Magazzino::lista_ordine_vendita(){
+	map<int, OrdineVendita>::iterator it;
+	for(it = oven.begin(); it!= oven.end(); ++it){
+		cout<<it->second<<endl;
+	}	
+}
+
+void Magazzino::crea_ordine_acquisto(OrdineAcquisto o){
+	o.add_fattura(aggiungi_fattura(o.conferma_ordine(), 0, o.get_data()));
+	oacq.insert(pair<int, OrdineAcquisto> (o.get_n_ordine(), o));
+}
+
+void Magazzino::lista_ordine_acquisto(){
+	map<int, OrdineAcquisto>::iterator it;
+	for(it = oacq.begin(); it!= oacq.end(); ++it){
+		cout<<it->second<<endl;
+	}	
+}
+	
 ostream& operator<< (ostream& os, Magazzino &m){
 	os<<"Magazzino "<<m.denominazione<<" in via "<<m.via<< " fondocassa: "<<m.fondoCassa;
 	return os;
@@ -480,6 +464,7 @@ ostream& operator<< (ostream& os, Magazzino &m){
 void test(){
 	Magazzino m("Brombeis", "Mediaworld", 1000);
 	cout<<m<<endl<<endl;
+	
 	cout<<"==== TEST DIPENDENTE ===="<<endl;
 	m.aggiungi_dipendente("Anna","345679","Direttore",123456);	
 	m.aggiungi_dipendente("Francesca","15678","Segretaria",1256);
@@ -520,7 +505,9 @@ void test(){
 	cout<<"==== TEST METODO DI PAGAMENTO ===="<<endl;
 	m.aggiungi_metodo_di_pagamento("Banconota", 100, 500);
 	m.aggiungi_metodo_di_pagamento("Assegno", 200, 1000);
+	m.aggiungi_metodo_di_pagamento("Carta", 200, 1000);
 	cout<<*m.trova_metodo_di_pagamento("Banconota")<<endl;
+	cout<<*m.trova_metodo_di_pagamento("Carta")<<endl;
 	m.lista_metodo_di_pagamento();
 	cout<<"==== FINE TEST METODO DI PAGAMENTO ===="<<endl<<endl;
 	
@@ -577,14 +564,12 @@ void test(){
 	OrdineAcquisto a(123456, 181130, m.trova_fornitore("Samsung")); //matricola data fornitore
 	a.addProdotto(200, 20, m.find_prodotto(0)); //ordino 10 PC LENOVO a prezzo 200
 	a.addProdotto(300, 5, m.find_prodotto(2)); //ordino 5 PC ASUS a prezzo 300
-	cout<<a<<endl;
-	a.add_fattura(m.aggiungi_fattura(a.conferma_ordine(), 0, a.get_data()));
-	m.lista_fattura();
-	cout<<endl<<"prodotti dopo conferma ordine:"<<endl;
-	cout<<a<<endl;
+	m.crea_ordine_acquisto(a);
+	m.lista_ordine_acquisto();
 	cout<<"==== FINE TEST ORDINE ACQUISTO ===="<<endl<<endl;
 	
-		cout<<"==== TEST ORDINE VENDITA ===="<<endl; 
+	cout<<"==== TEST ORDINE VENDITA ===="<<endl; 
+	{
 	OrdineVendita o("Brombeis",123456,181130);
 	o.add_prodotto(5,m.find_prodotto(0)); //ricerco tramite barcode
 	o.add_prodotto(20,m.find_prodotto(1)); //aggiungo prodotto disattivato
@@ -593,10 +578,21 @@ void test(){
    	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
   	o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
    	o.add_consumatore(*m.trova_impresa("0123456789"));
-   	o.add_fattura(m.aggiungi_fattura(o.conferma_ordine(), 1, o.get_data()));
+   	//o.add_fattura(m.aggiungi_fattura(o.conferma_ordine(), 1, o.get_data()));
+	m.crea_ordine_vendita(o);
+    }
+	{
+   	OrdineVendita o("Sommarive",123456,181130);
+   	o.add_prodotto(1,m.find_prodotto(0));
+   	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Assegno"));
+   	o.add_consumatore(*m.trova_privato("ABCDEFG1234"));
+   	//o1.add_fattura(m.aggiungi_fattura(o1.conferma_ordine(), 1, o1.get_data()));
    	//m.lista_fattura();
 	
-	cout<<o;
+	m.crea_ordine_vendita(o);
+	}
+	//cout<<o;
+	m.lista_ordine_vendita();	
 	cout<<"==== FINE TEST ORDINE VENDITA ===="<<endl<<endl;
 	
 	cout<<m;
