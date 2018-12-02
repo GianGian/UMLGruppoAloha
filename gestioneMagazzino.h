@@ -50,7 +50,6 @@ public:
 	Fornitore* trova_fornitore(char* _denominazione);
 	
 	Fattura* aggiungi_fattura(int _totale, bool _vendita, int data);
-	//void togli_fattura(int _numero);
 	void lista_fattura();
 	
 	void aggiungi_metodo_di_pagamento(char* _tipo, int _commissione, int _massimale);
@@ -75,7 +74,12 @@ public:
 	int trova_prezzo(int barcode, int data);
 	
 	friend ostream& operator<< (ostream& os, Magazzino &m);
-	//void crea_ordine_vendita(int matricola, int data, char* piva, char* cognome = 0);
+	
+	void crea_ordine_vendita(OrdineVendita o);
+	void lista_ordine_vendita();
+	
+	void crea_ordine_acquisto(OrdineAcquisto o);
+	void lista_ordine_acquisto();
 };
 
 ostream& operator<< (ostream& os, Magazzino &m);
