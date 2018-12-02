@@ -45,8 +45,7 @@ void Magazzino::lista_dipendenti(){
 		cout<<it->second;
 		if(it->second.get_stato()==0){
 			cout<<" DISATTIVATO";
-		}
-		cout<<endl;
+		}	
 	}
 }
 
@@ -482,9 +481,9 @@ void test(){
 	Magazzino m("Brombeis", "Mediaworld", 1000);
 	cout<<m<<endl<<endl;
 	cout<<"==== TEST DIPENDENTE ===="<<endl;
-	m.aggiungi_dipendente("Anna","+39345679","Direttore",123456);	
-	m.aggiungi_dipendente("Francesca","+3915678","Segretaria",1256);
-	m.aggiungi_dipendente("Chiara","+395847","Stagista",123456);
+	m.aggiungi_dipendente("Anna","345679","Direttore",123456);	
+	m.aggiungi_dipendente("Francesca","15678","Segretaria",1256);
+	m.aggiungi_dipendente("Chiara","395847","Stagista",123456);
 	m.lista_dipendenti();
 	m.togli_dipendente(12576);
 	m.togli_dipendente(1256);
@@ -497,10 +496,12 @@ void test(){
 	m.aggiungi_fornitore("Silvia","3223245654","Lenovo","pc e tablet");
 	m.aggiungi_fornitore("Giulia","3323245654","Asus","pc e tablet");
 	m.aggiungi_fornitore("Giulia","3323245654","Asus","pc e tablet");//non mi permette di inserirne due uguali
-	m.aggiungi_fornitore("Marco","3423245654","Samsung","pc, tablet e smartphone");
+	m.aggiungi_fornitore("Gianlor","3423245654","Samsung","pc, tablet e smartphone");
 	m.lista_fornitori();
+	m.togli_fornitore("Unitn");//se provo a metterne uno finto (basta togliere una lettera si impalla
 	m.togli_fornitore("Lenovo");
-	m.togli_fornitore("Apple");
+	m.togli_fornitore("Lenono");
+	
 	m.lista_fornitori();
 	cout<<"==== FINE TEST FORNITORI ===="<<endl<<endl;
 	/*

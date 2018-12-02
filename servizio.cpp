@@ -16,11 +16,10 @@ int Servizio::get_costo(){
 char* Servizio::get_nome()const{
 	return nome;
 }
-/*
+
 bool Servizio::operator<(const Servizio &s)const{
 	return (s.nome<nome);
 }
-*/
 ostream& operator << (ostream& os, const Servizio& s){
 	os<<s.nome<<" durata "<<s.durata<<" franchigia "<<s.franchigia<<" costo servizio "<<s.costoServizio;
 }
