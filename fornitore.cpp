@@ -22,7 +22,7 @@ ostream& operator << (ostream & os, const Fornitore &f){
 		 os<<"["<<(*iter->second)<<"] ";
 	}
 }
-	os<<endl;
+	//os<<endl;
 	return os;
 }
 

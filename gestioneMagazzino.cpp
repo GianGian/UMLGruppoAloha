@@ -80,9 +80,9 @@ void Magazzino::togli_fornitore(char* _denominazione){
 	if(it!=forn.end()){
 		//forn.erase(it);
 		it->second.disattiva_stato();
-		cout<<"Rimosso fornitore";
+		cout<<"Rimosso fornitore"<<endl;
 	}
-	else cout<<"Fornitore non trovato";
+	else cout<<"Fornitore non trovato"<<endl;
 }
 
 void Magazzino::lista_fornitori(){
@@ -486,7 +486,8 @@ void test(){
 	m.togli_fornitore("Unitn");//se provo a metterne uno finto (basta togliere una lettera si impalla
 	m.togli_fornitore("Lenovo");
 	m.togli_fornitore("Lenono");
-	
+	m.add_servizio_fornitore("Samsun", "Kasko",1,10,100);
+	m.add_servizio_fornitore("Samsung", "Assicurazione",1,100,1000);
 	m.lista_fornitori();
 	cout<<"==== FINE TEST FORNITORI ===="<<endl<<endl;
 	/*
@@ -556,7 +557,6 @@ void test(){
 	m.lista_prodotto();
 	
 	cout<<"==== TEST SERVIZIO ===="<<endl;
-	m.add_servizio_fornitore("Samsung", "Kasko",1,10,100);
 	cout<<"==== FINE TEST SERVIZIO ===="<<endl<<endl;
 	
 

@@ -13,7 +13,6 @@ public:
 	int get_costo();
 	char* get_nome()const;
 	friend ostream& operator << (ostream& os, const Servizio& s);
-	bool operator<(const Servizio &s)const;
 };
 ostream& operator << (ostream& os,const Servizio& s);
 #endif

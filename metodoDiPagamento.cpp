@@ -14,9 +14,6 @@ int MetodoDiPagamento::get_commissione(){
 	return commissione;
 }
 
-bool MetodoDiPagamento::operator< (const MetodoDiPagamento &m)const{
-	return (m.nome<nome);
-}
 
 char* MetodoDiPagamento::get_nome() const{
 	return nome;
