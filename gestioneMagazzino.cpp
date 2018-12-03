@@ -570,25 +570,20 @@ void test(){
 	
 	cout<<"==== TEST ORDINE VENDITA ===="<<endl; 
 	{
-	OrdineVendita o("Brombeis",123456,181130);
+	OrdineVendita o("Brombeis",123456,181130, *m.trova_impresa("0123456789"));
 	o.add_prodotto(5,m.find_prodotto(0)); //ricerco tramite barcode
 	o.add_prodotto(20,m.find_prodotto(1)); //aggiungo prodotto disattivato
 	o.add_prodotto(20,m.find_prodotto(0)); //aggiungo un prodotto già inserito in quantita non disponibile, mi darà errore e non verrà inserito
 	o.add_prodotto(5,m.find_prodotto(3)); //ricerco tramite barcode il vetro (no servizio)
    	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
-  	o.add_servizio(*m.trova_servizio("Samsung", "Kasko"));
-   	o.add_consumatore(*m.trova_impresa("0123456789"));
-   	//o.add_fattura(m.aggiungi_fattura(o.conferma_ordine(), 1, o.get_data()));
+  	o.add_servizio(*m.trova_servizio("Samsung", "Assicurazione"));
 	m.crea_ordine_vendita(o);
     }
 	{
-   	OrdineVendita o("Sommarive",123456,181130);
+   	OrdineVendita o("Sommarive",123456,181130, *m.trova_privato("ABCDEFG1234"));
    	o.add_prodotto(1,m.find_prodotto(0));
    	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Assegno"));
-   	o.add_consumatore(*m.trova_privato("ABCDEFG1234"));
-   	//o1.add_fattura(m.aggiungi_fattura(o1.conferma_ordine(), 1, o1.get_data()));
    	//m.lista_fattura();
-	
 	m.crea_ordine_vendita(o);
 	}
 	//cout<<o;

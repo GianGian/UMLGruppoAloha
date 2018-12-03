@@ -3,10 +3,13 @@
 #include "ordineVendita.h"
 using namespace std;
 
-OrdineVendita::OrdineVendita(char* _via, int _matricola, int data):Ordine(_matricola,data){
+OrdineVendita::OrdineVendita(char* _via, int _matricola, int data, Consumatore& _c):Ordine(_matricola,data){
 	via = _via;
 	pagamento = NULL;
-	c = NULL;
+	c = &_c;
+	if(c == NULL){
+		cout<<"Errore, consumatore non trovato"<<endl;
+	}
 	s = NULL;
 }
 
@@ -50,12 +53,6 @@ void OrdineVendita::add_servizio(Servizio &_s){
 	s = &_s;	
 }
 
-void OrdineVendita::add_consumatore(Consumatore &_c){
-	if(&_c == NULL){
-		cout<<"Consumatore non trovato"<<endl;
-	}
-	c = &_c;
-}
 
 void OrdineVendita::add_metodo_di_pagamento(MetodoDiPagamento *p){
 	pagamento = p;
