@@ -13,7 +13,7 @@ class Fornitore:public Anagrafica{
 private:
     char* denominazione;
     char* prodottiVenduti;
-    map<char*, Servizio*> ser;
+    map<char*, Servizio> ser;
 
 public:
 	Fornitore(char* _nome,char* _telefono,char* _denominazione,char* _prodottiVenduti);
@@ -24,7 +24,6 @@ public:
 	char* get_denominazione()const;
 	char* get_prodottiVenduti()const;
 	Servizio* get_servizio(char* _nome);
-	~Fornitore();
 };
 
 
