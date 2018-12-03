@@ -25,6 +25,7 @@ public:
 	void add_metodo_di_pagamento(MetodoDiPagamento *p);
 	friend ostream& operator<< (ostream& os, const OrdineVendita &o);
 	int conferma_ordine();
+	int sub_totale();
 };
 
 ostream& operator<< (ostream& os, const OrdineVendita &o);

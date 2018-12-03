@@ -76,6 +76,26 @@ int OrdineVendita::conferma_ordine(){
 		return totale;
 	}
 }
+
+int OrdineVendita::sub_totale(){
+	
+	multimap<int, Prodotto*>::iterator iter;
+	int totale = 0;
+	if(prodotto.empty() == 1) return 0;
+	else{
+		for(iter = prodotto.begin(); iter != prodotto.end(); ++iter){
+			totale+=(iter->second->getPrezzo(get_data())*iter->first);
+			iter->second->cambia_quantita(-iter->first);
+			if((s!=NULL)&&(iter->second->get_servizio()==1)){
+			totale+=(s->get_costo() * iter->first);
+			}	
+		}		
+		totale-=(totale*(c->getSconto()))/100;
+		return totale;
+	}
+	
+}
+
 ostream& operator<< (ostream& os, const OrdineVendita &o){
 	if(o.prodotto.empty()==1){
 		cout<<"Ordine vuoto"<<endl;

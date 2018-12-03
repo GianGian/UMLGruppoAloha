@@ -574,6 +574,7 @@ void test(){
 	o.add_prodotto(5,m.find_prodotto(0)); //ricerco tramite barcode
 	o.add_prodotto(20,m.find_prodotto(1)); //aggiungo prodotto disattivato
 	o.add_prodotto(20,m.find_prodotto(0)); //aggiungo un prodotto già inserito in quantita non disponibile, mi darà errore e non verrà inserito
+	cout<<"SUBTOTALE: "<<o.sub_totale()<<endl;
 	o.add_prodotto(5,m.find_prodotto(3)); //ricerco tramite barcode il vetro (no servizio)
    	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
   	o.add_servizio(*m.trova_servizio("Samsung", "Assicurazione"));
