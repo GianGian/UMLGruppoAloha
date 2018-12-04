@@ -505,10 +505,10 @@ void test(){
 	*/
 	cout<<"==== TEST METODO DI PAGAMENTO ===="<<endl;
 	m.aggiungi_metodo_di_pagamento("Banconota", 100, 500);
-	m.aggiungi_metodo_di_pagamento("Assegno", 200, 1000);
+	m.aggiungi_metodo_di_pagamento("Assegno", 200, 10000);
 	m.aggiungi_metodo_di_pagamento("Carta", 200, 1000);
 	cout<<*m.trova_metodo_di_pagamento("Banconota")<<endl;
-	cout<<*m.trova_metodo_di_pagamento("Carta")<<endl;
+	cout<<*m.trova_metodo_di_pagamento("Assegno")<<endl;
 	m.lista_metodo_di_pagamento();
 	cout<<"==== FINE TEST METODO DI PAGAMENTO ===="<<endl<<endl;
 	
@@ -533,7 +533,6 @@ void test(){
 	m.togli_impresa("9876543210");
 	m.lista_impresa();
 	m.trova_impresa("0123456789")->stampa();
-	//m.togli_impresa("0123456789");
 	m.lista_impresa(); 
 	cout<<"==== FINE TEST IMPRESA ===="<<endl<<endl;
 	
@@ -574,20 +573,21 @@ void test(){
 	o.add_prodotto(5,m.find_prodotto(0)); //ricerco tramite barcode
 	o.add_prodotto(20,m.find_prodotto(1)); //aggiungo prodotto disattivato
 	o.add_prodotto(20,m.find_prodotto(0)); //aggiungo un prodotto già inserito in quantita non disponibile, mi darà errore e non verrà inserito
-	cout<<"SUBTOTALE: "<<o.sub_totale()<<endl;
 	o.add_prodotto(5,m.find_prodotto(3)); //ricerco tramite barcode il vetro (no servizio)
-   	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"));
+	cout<<o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Banconota"))<<endl;
+	cout<<o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Assegno"))<<endl;
   	o.add_servizio(*m.trova_servizio("Samsung", "Assicurazione"));
+  	m.lista_prodotto();
 	m.crea_ordine_vendita(o);
+	m.lista_prodotto();
     }
 	{
    	OrdineVendita o("Sommarive",123456,181130, *m.trova_privato("ABCDEFG1234"));
    	o.add_prodotto(1,m.find_prodotto(0));
    	o.add_metodo_di_pagamento(m.trova_metodo_di_pagamento("Assegno"));
-   	//m.lista_fattura();
-	m.crea_ordine_vendita(o);
+    	m.crea_ordine_vendita(o);
 	}
-	//cout<<o;
+	cout<<"STAMPO"<<endl;
 	m.lista_ordine_vendita();	
 	cout<<"==== FINE TEST ORDINE VENDITA ===="<<endl<<endl;
 	

@@ -14,6 +14,9 @@ int MetodoDiPagamento::get_commissione(){
 	return commissione;
 }
 
+int MetodoDiPagamento::get_massimale(){
+	return massimale;
+}
 
 char* MetodoDiPagamento::get_nome() const{
 	return nome;

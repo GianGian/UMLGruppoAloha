@@ -54,14 +54,19 @@ void OrdineVendita::add_servizio(Servizio &_s){
 }
 
 
-void OrdineVendita::add_metodo_di_pagamento(MetodoDiPagamento *p){
-	pagamento = p;
+bool OrdineVendita::add_metodo_di_pagamento(MetodoDiPagamento *p){
+	if((p->get_massimale())>sub_totale()){
+		pagamento = p;
+		return 1;
+	}
+	return 0;
+	
 }
 
 int OrdineVendita::conferma_ordine(){
 	multimap<int, Prodotto*>::iterator iter;
 	int totale = 0;
-	if(prodotto.empty() == 1) return 0;
+	if(prodotto.empty() == 1|| pagamento == NULL) return -1;
 	else{
 		for(iter = prodotto.begin(); iter != prodotto.end(); ++iter){
 			totale+=(iter->second->getPrezzo(get_data())*iter->first);
@@ -85,7 +90,6 @@ int OrdineVendita::sub_totale(){
 	else{
 		for(iter = prodotto.begin(); iter != prodotto.end(); ++iter){
 			totale+=(iter->second->getPrezzo(get_data())*iter->first);
-			iter->second->cambia_quantita(-iter->first);
 			if((s!=NULL)&&(iter->second->get_servizio()==1)){
 			totale+=(s->get_costo() * iter->first);
 			}	

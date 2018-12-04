@@ -22,7 +22,7 @@ public:
 	OrdineVendita(char* _via, int matricola, int data, Consumatore& _c);
 	void add_prodotto(int q, Prodotto* p);
 	void add_servizio(Servizio &_s);
-	void add_metodo_di_pagamento(MetodoDiPagamento *p);
+	bool add_metodo_di_pagamento(MetodoDiPagamento *p);
 	friend ostream& operator<< (ostream& os, const OrdineVendita &o);
 	int conferma_ordine();
 	int sub_totale();

@@ -15,6 +15,7 @@ public:
 MetodoDiPagamento(char *_nome, int _massimale, int _commissione);
 int get_commissione(); ///< permette di ottenere la commissione dato il metodo di pagamento
 char* get_nome()const;
+int get_massimale();
 friend ostream & operator<<(ostream &os, const MetodoDiPagamento &m); 
 bool get_stato()const;
 void disattiva_stato();
